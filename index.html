@@ -1,0 +1,2312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SR&ED Project Eligibility Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<script defer src="https://cdn.jsdelivr.net/npm/html-docx-js@0.3.1/dist/html-docx.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:    #0D2240;
+    --blue:    #1456A0;
+    --steel:   #2C7BB5;
+    --teal:    #0B7B6B;
+    --amber:   #C47D00;
+    --red:     #B02828;
+    --bg:      #F2F5FA;
+    --surface: #FFFFFF;
+    --border:  #D8E2EF;
+    --text:    #1A2A3A;
+    --muted:   #5A6A7A;
+    --light:   #EBF1FA;
+    --sidebar-w: 260px;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── TOP NAV ── */
+  .topnav {
+    height: 56px;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    gap: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
+  .topnav-logo {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .topnav-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: linear-gradient(135deg, #1456A0, #0B7B6B);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .topnav-title { font-size: 15px; font-weight: 800; color: #fff; letter-spacing: -0.3px; }
+  .topnav-sub   { font-size: 11px; color: #7A9AC0; font-weight: 500; }
+  .topnav-divider { width: 1px; height: 28px; background: #2A4060; margin: 0 8px; }
+  .topnav-badge {
+    font-size: 10.5px; font-weight: 700; background: #1456A0;
+    color: #fff; border-radius: 20px; padding: 2px 10px; letter-spacing: 0.5px;
+  }
+  .topnav-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+  .overall-score-pill {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.1); border-radius: 20px; padding: 4px 12px;
+    font-size: 12px; color: #C8DCF0; font-weight: 600;
+  }
+  .overall-score-pill strong { color: #fff; font-size: 14px; }
+
+  /* ── LAYOUT ── */
+  .layout { display: flex; flex: 1; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: var(--sidebar-w);
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    position: sticky; top: 56px;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+  .sidebar-section { padding: 16px 0 8px; }
+  .sidebar-label {
+    font-size: 10px; font-weight: 700; color: var(--muted);
+    letter-spacing: 1.2px; text-transform: uppercase;
+    padding: 0 18px; margin-bottom: 6px;
+  }
+  .phase-btn {
+    display: flex; align-items: center; gap: 11px;
+    padding: 10px 18px; cursor: pointer; border: none;
+    background: transparent; width: 100%; text-align: left;
+    transition: background 0.15s; position: relative;
+  }
+  .phase-btn:hover { background: var(--light); }
+  .phase-btn.active {
+    background: var(--light);
+    border-right: 3px solid var(--blue);
+  }
+  .phase-btn.active .phase-btn-label { color: var(--blue); font-weight: 700; }
+  .phase-icon-wrap {
+    width: 34px; height: 34px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .phase-btn-text { flex: 1; min-width: 0; }
+  .phase-btn-num  { font-size: 10px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; }
+  .phase-btn-label{ font-size: 12.5px; color: var(--text); font-weight: 600; line-height: 1.3; }
+  .phase-score-chip {
+    font-size: 10px; font-weight: 800; border-radius: 6px;
+    padding: 2px 7px; flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto; padding: 16px 18px;
+    border-top: 1px solid var(--border);
+    background: #F8FAFC;
+  }
+  .cta-box {
+    background: linear-gradient(135deg, var(--navy), #1456A0);
+    border-radius: 12px; padding: 16px; color: #fff;
+  }
+  .cta-box h4 { font-size: 12px; font-weight: 800; margin-bottom: 6px; }
+  .cta-box p  { font-size: 11px; color: #A8C8E8; line-height: 1.5; margin-bottom: 10px; }
+  .cta-btn {
+    display: block; width: 100%; padding: 8px;
+    background: #fff; color: var(--navy); border: none;
+    border-radius: 8px; font-size: 12px; font-weight: 700;
+    cursor: pointer; text-align: center; transition: opacity 0.15s;
+  }
+  .cta-btn:hover { opacity: 0.9; }
+  .cta-btn-outline {
+    display: block; width: 100%; padding: 8px; margin-top: 8px;
+    background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.35);
+    border-radius: 8px; font-size: 12px; font-weight: 700;
+    cursor: pointer; text-align: center; transition: background 0.15s;
+    font-family: inherit;
+  }
+  .cta-btn-outline:hover { background: rgba(255,255,255,0.12); }
+  .app-toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--navy); color: #fff; padding: 12px 22px; border-radius: 10px;
+    font-size: 13px; font-weight: 600; box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.25s;
+  }
+  .app-toast.show { opacity: 1; }
+
+  /* ── MAIN ── */
+  .main { flex: 1; padding: 28px 32px; min-width: 0; overflow-y: auto; }
+
+  /* ── PHASE HEADER ── */
+  .phase-header {
+    border-radius: 14px; padding: 24px 28px; margin-bottom: 24px;
+    border: 1px solid var(--border); position: relative; overflow: hidden;
+  }
+  .phase-header-bg {
+    position: absolute; right: -20px; top: -20px;
+    font-size: 100px; opacity: 0.07; pointer-events: none;
+    line-height: 1;
+  }
+  .phase-header-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.2px;
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .phase-header h2 { font-size: 22px; font-weight: 900; color: var(--text); letter-spacing: -0.5px; margin-bottom: 4px; }
+  .phase-header-sub { font-size: 13.5px; color: var(--muted); line-height: 1.5; }
+
+  /* ── SCORE BAR ── */
+  .score-bar-wrap { margin-bottom: 24px; }
+  .score-bar-top {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;
+  }
+  .score-bar-label { font-size: 12.5px; font-weight: 600; color: var(--muted); }
+  .score-val-pill {
+    font-size: 12px; font-weight: 800; border-radius: 20px; padding: 3px 12px;
+  }
+  .score-track {
+    height: 10px; background: var(--border); border-radius: 5px; overflow: hidden;
+  }
+  .score-fill { height: 100%; border-radius: 5px; transition: width 0.5s cubic-bezier(.4,0,.2,1); }
+
+  /* ── FIELDS ── */
+  .field-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 22px; margin-bottom: 18px;
+    transition: box-shadow 0.15s;
+  }
+  .field-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .field-label {
+    font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 5px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .field-weight {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; background: var(--light); color: var(--blue);
+    border-radius: 5px; padding: 1px 6px; font-weight: 600;
+  }
+  .field-hint {
+    font-size: 12.5px; color: var(--muted); line-height: 1.65;
+    margin-bottom: 14px; padding: 10px 14px;
+    background: #F7FAFF; border-left: 3px solid var(--border);
+    border-radius: 0 6px 6px 0;
+  }
+  input[type=text], textarea, select {
+    width: 100%; padding: 11px 14px;
+    border: 1.5px solid var(--border); border-radius: 9px;
+    font-size: 13.5px; font-family: 'Inter', sans-serif;
+    color: var(--text); background: #FAFCFF;
+    outline: none; transition: border-color 0.15s;
+    resize: vertical;
+  }
+  input[type=text]:focus, textarea:focus { border-color: var(--blue); background: #fff; }
+  textarea { min-height: 120px; line-height: 1.6; }
+
+  .radio-grid, .check-grid { display: flex; flex-direction: column; gap: 8px; }
+  .radio-item, .check-item {
+    display: flex; align-items: flex-start; gap: 11px;
+    padding: 10px 14px; border-radius: 9px; cursor: pointer;
+    border: 1.5px solid var(--border); background: #FAFCFF;
+    transition: all 0.15s;
+  }
+  .radio-item:hover, .check-item:hover { border-color: #A0B8D8; background: #F4F8FF; }
+  .radio-item.selected { background: #EBF3FF; border-color: var(--blue); }
+  .check-item.selected { background: #EBF3FF; border-color: var(--blue); }
+  .radio-item input, .check-item input { margin-top: 2px; accent-color: var(--blue); flex-shrink: 0; }
+  .radio-item span, .check-item span { font-size: 13px; color: var(--text); line-height: 1.5; }
+
+  .tip-toggle {
+    margin-top: 12px; background: none; border: none;
+    color: var(--blue); font-size: 12px; font-weight: 600;
+    cursor: pointer; display: flex; align-items: center; gap: 5px;
+    padding: 0; font-family: inherit;
+  }
+  .tip-box {
+    margin-top: 10px; padding: 13px 16px;
+    background: #F0F6FF; border-radius: 9px;
+    border-left: 3px solid var(--blue);
+    font-size: 12.5px; color: var(--text); line-height: 1.7;
+    display: none;
+  }
+  .tip-box.open { display: block; }
+
+  /* ── SUMMARY ── */
+  .summary-wrap { display: none; }
+  .summary-wrap.active { display: block; }
+
+  .summary-hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1A3A6A 100%);
+    border-radius: 16px; padding: 32px; margin-bottom: 24px; color: #fff;
+    position: relative; overflow: hidden;
+  }
+  .summary-hero-bg {
+    position: absolute; right: 32px; top: 50%; transform: translateY(-50%);
+    font-size: 90px; opacity: 0.08;
+  }
+  .summary-score-ring {
+    display: flex; align-items: center; gap: 32px;
+  }
+  .big-score {
+    font-size: 72px; font-weight: 900; line-height: 1;
+    font-family: 'IBM Plex Mono', monospace; letter-spacing: -3px;
+  }
+  .big-score-label { font-size: 16px; font-weight: 700; margin-top: 4px; }
+  .summary-desc { font-size: 14px; color: #A8C8E8; line-height: 1.7; max-width: 400px; }
+  .summary-desc strong { color: #fff; }
+
+  .phase-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px;
+  }
+  .phase-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 12px; text-align: center;
+  }
+  .phase-card-icon { font-size: 26px; margin-bottom: 8px; }
+  .phase-card-name { font-size: 10px; color: var(--muted); font-weight: 600; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .phase-card-score { font-size: 26px; font-weight: 900; font-family: 'IBM Plex Mono', monospace; }
+  .phase-card-status { font-size: 10.5px; font-weight: 700; margin-top: 3px; }
+
+  .gaps-section h3 {
+    font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 4px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .all-complete {
+    padding: 18px 20px; background: #E6F6F0; border-radius: 12px;
+    border-left: 4px solid var(--teal); font-size: 13.5px; color: #0B5040; line-height: 1.6;
+  }
+  .gap-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 18px; margin-bottom: 14px;
+  }
+  .gap-card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  .gap-card-header strong { font-size: 13.5px; color: var(--text); flex: 1; }
+  .gap-chip { font-size: 11px; font-weight: 800; border-radius: 6px; padding: 2px 9px; }
+  .gap-items { display: flex; flex-direction: column; gap: 14px; }
+  .gap-item { padding-left: 2px; }
+  .gap-item-head { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; flex-wrap: wrap; }
+  .gap-item-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .gap-item-label { font-size: 13px; font-weight: 700; color: var(--text); }
+  .gap-critical { font-size: 9.5px; font-weight: 800; background: #FDE7E7; color: #B02828; border-radius: 5px; padding: 1px 6px; letter-spacing: 0.4px; text-transform: uppercase; }
+  .gap-status-chip { font-size: 10px; font-weight: 700; border-radius: 5px; padding: 1px 8px; margin-left: auto; }
+  .gap-item-text { font-size: 12.5px; color: var(--muted); line-height: 1.65; margin: 0 0 6px 16px; }
+  .gap-jump {
+    margin-left: 16px; background: none; border: none; color: var(--blue);
+    font-size: 11.5px; font-weight: 600; cursor: pointer; padding: 0; font-family: inherit;
+  }
+  .gap-jump:hover { text-decoration: underline; }
+
+  .next-step-box {
+    background: linear-gradient(135deg, #EBF3FF, #F0F9F6);
+    border: 1px solid #C8DDF8; border-radius: 12px; padding: 20px;
+    margin-top: 20px; display: flex; align-items: flex-start; gap: 14px;
+  }
+  .next-step-icon { font-size: 28px; flex-shrink: 0; }
+  .next-step-box h4 { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 5px; }
+  .next-step-box p  { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* ── EXPORT PANEL ── */
+  .export-panel {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 24px; margin-top: 24px;
+  }
+  .export-panel-header h3 { font-size: 17px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+  .export-panel-header p  { font-size: 13px; color: var(--muted); line-height: 1.55; margin-bottom: 18px; }
+  .export-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .export-card {
+    display: flex; flex-direction: column; gap: 12px;
+    padding: 18px; border: 1.5px solid var(--border); border-radius: 12px;
+    transition: all 0.15s; background: #FAFCFF; position: relative;
+  }
+  .export-card:hover { border-color: var(--blue); box-shadow: 0 4px 16px rgba(20,86,160,0.12); }
+  .export-card-icon {
+    width: 44px; height: 44px; border-radius: 11px;
+    display: flex; align-items: center; justify-content: center; font-size: 22px;
+  }
+  .export-card-body h4 { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 5px; }
+  .export-card-body p  { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .export-card-actions { display: flex; gap: 8px; margin-top: auto; }
+  .export-action-btn {
+    flex: 1; padding: 9px 8px; border-radius: 8px; font-size: 12px; font-weight: 700;
+    cursor: pointer; font-family: inherit; border: 1.5px solid var(--border);
+    background: #fff; color: var(--text); transition: all 0.15s; text-align: center;
+  }
+  .export-action-btn:hover { border-color: var(--blue); background: #F4F8FF; }
+  .export-action-btn-word { border-color: #C8DDF8; color: var(--blue); }
+  .export-action-btn-word:hover { background: #EBF3FF; }
+  .export-note {
+    margin-top: 18px; padding: 14px 16px; background: #F7FAFF;
+    border-left: 3px solid var(--steel); border-radius: 0 8px 8px 0;
+    font-size: 12px; color: var(--muted); line-height: 1.65;
+  }
+  .export-note strong { color: var(--text); }
+
+  /* ── NAV FOOTER ── */
+  .nav-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border);
+  }
+  .btn {
+    padding: 11px 26px; border-radius: 10px; font-size: 13.5px;
+    font-weight: 700; cursor: pointer; font-family: inherit;
+    transition: all 0.15s; border: none;
+  }
+  .btn-ghost {
+    background: var(--surface); color: var(--text);
+    border: 1.5px solid var(--border);
+  }
+  .btn-ghost:hover { border-color: #A0B8D8; }
+  .btn-ghost:disabled { opacity: 0.35; cursor: default; }
+  .btn-primary { background: var(--blue); color: #fff; box-shadow: 0 2px 8px rgba(20,86,160,0.3); }
+  .btn-primary:hover { background: #0D4A8C; }
+  .btn-teal { background: var(--teal); color: #fff; }
+  .progress-dots { display: flex; gap: 6px; align-items: center; }
+  .dot {
+    width: 8px; height: 8px; border-radius: 4px;
+    background: var(--border); transition: all 0.2s;
+  }
+  .dot.active { background: var(--blue); width: 20px; }
+  .dot.done   { background: var(--teal); }
+
+  /* ── PHASE CONTENT ── */
+  .phase-content { display: none; }
+  .phase-content.active { display: block; }
+
+  /* ── SUMMARY SWITCH ── */
+  #summary-view { display: none; }
+  #summary-view.active { display: block; }
+
+  /* ── CUSTOM ITEM CONTROLS ── */
+  .add-another-btn {
+    margin-top: 10px; background: none; border: 1.5px dashed var(--border);
+    color: var(--blue); font-size: 12.5px; font-weight: 600; cursor: pointer;
+    border-radius: 9px; padding: 8px 14px; width: 100%; text-align: left;
+    font-family: inherit; transition: border-color 0.15s, background 0.15s;
+  }
+  .add-another-btn:hover { border-color: var(--blue); background: #F0F6FF; }
+  .custom-add-btn {
+    padding: 9px 16px; background: var(--blue); color: #fff; border: none;
+    border-radius: 9px; font-size: 13px; font-weight: 600; cursor: pointer;
+    white-space: nowrap; font-family: inherit;
+  }
+  .custom-add-btn:hover { background: #0D4A8C; }
+  .custom-cancel-btn {
+    padding: 9px 12px; background: var(--surface); color: var(--muted);
+    border: 1.5px solid var(--border); border-radius: 9px; font-size: 13px;
+    cursor: pointer; font-family: inherit;
+  }
+  .custom-cancel-btn:hover { border-color: #A0B8D8; }
+  .other-item { cursor: default !important; }
+  .other-item:hover { background: #F7FAFF !important; }
+
+  /* ── NOTES SECTION (below checkboxes) ── */
+  .notes-section {
+    margin-top: 16px;
+    border-top: 1px dashed var(--border);
+    padding-top: 14px;
+  }
+  .notes-section-label {
+    font-size: 11px; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.9px;
+    display: flex; align-items: center; gap: 6px; margin-bottom: 8px;
+  }
+  .notes-textarea {
+    width: 100%; padding: 10px 13px;
+    border: 1.5px solid var(--border); border-radius: 9px;
+    font-size: 13px; font-family: 'Inter', sans-serif;
+    color: var(--text); background: #FAFCFF;
+    outline: none; resize: vertical; line-height: 1.6;
+    min-height: 80px; transition: border-color 0.15s;
+  }
+  .notes-textarea:focus { border-color: var(--blue); background: #fff; }
+  .notes-textarea::placeholder { color: #9AAABB; }
+
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main { padding: 20px 16px; }
+    .phase-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <div class="topnav-logo">
+    <div class="topnav-icon">🍁</div>
+    <div>
+      <div class="topnav-title">SR&amp;ED Eligibility Guide</div>
+      <div class="topnav-sub">Federal ITC + Alberta IEG · T661 Readiness</div>
+    </div>
+  </div>
+  <div class="topnav-right">
+    <div class="overall-score-pill">
+      Overall Readiness: <strong id="overall-score-display">—</strong>
+    </div>
+  </div>
+</nav>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-label">Project Phases</div>
+
+    <button class="phase-btn active" onclick="showPhase(1)" id="btn-1">
+      <div class="phase-icon-wrap" style="background:#EBF2FF;">🔬</div>
+      <div class="phase-btn-text">
+        <div class="phase-btn-num">Phase 1</div>
+        <div class="phase-btn-label">Identification &amp; Scoping</div>
+      </div>
+      <span class="phase-score-chip" id="chip-1" style="display:none"></span>
+    </button>
+
+    <button class="phase-btn" onclick="showPhase(2)" id="btn-2">
+      <div class="phase-icon-wrap" style="background:#EDFAF6;">📋</div>
+      <div class="phase-btn-text">
+        <div class="phase-btn-num">Phase 2</div>
+        <div class="phase-btn-label">Activity Tracking</div>
+      </div>
+      <span class="phase-score-chip" id="chip-2" style="display:none"></span>
+    </button>
+
+    <button class="phase-btn" onclick="showPhase(3)" id="btn-3">
+      <div class="phase-icon-wrap" style="background:#F4EEFF;">💰</div>
+      <div class="phase-btn-text">
+        <div class="phase-btn-num">Phase 3</div>
+        <div class="phase-btn-label">Cost Capture</div>
+      </div>
+      <span class="phase-score-chip" id="chip-3" style="display:none"></span>
+    </button>
+
+    <button class="phase-btn" onclick="showPhase(4)" id="btn-4">
+      <div class="phase-icon-wrap" style="background:#FFF5EA;">📝</div>
+      <div class="phase-btn-text">
+        <div class="phase-btn-num">Phase 4</div>
+        <div class="phase-btn-label">Technical Narrative</div>
+      </div>
+      <span class="phase-score-chip" id="chip-4" style="display:none"></span>
+    </button>
+
+    <button class="phase-btn" onclick="showPhase(5)" id="btn-5">
+      <div class="phase-icon-wrap" style="background:#E6FAF8;">📄</div>
+      <div class="phase-btn-text">
+        <div class="phase-btn-num">Phase 5</div>
+        <div class="phase-btn-label">Claim Preparation</div>
+      </div>
+      <span class="phase-score-chip" id="chip-5" style="display:none"></span>
+    </button>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-label">Report</div>
+    <button class="phase-btn" onclick="showSummary()" id="btn-summary">
+      <div class="phase-icon-wrap" style="background:#F0F4FA;">📊</div>
+      <div class="phase-btn-text">
+        <div class="phase-btn-num">Summary</div>
+        <div class="phase-btn-label">Readiness Assessment</div>
+      </div>
+    </button>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="cta-box" style="margin-bottom:12px; background:linear-gradient(135deg, #1A2F4A, #123050);">
+      <h4>💾 Your Progress</h4>
+      <p>Save this client's session to a file, or load a previously saved session to keep working.</p>
+      <button class="cta-btn" onclick="saveProgress()">Save Progress</button>
+      <button class="cta-btn-outline" onclick="document.getElementById('load-file-input').click()">Load Progress</button>
+      <input type="file" id="load-file-input" accept="application/json,.json" style="display:none" onchange="handleLoadFile(event)"/>
+    </div>
+    <div class="cta-box">
+      <h4>Building your claim</h4>
+      <p>Complete all five phases, then export your T661 description and expenditure schedule from the Summary.</p>
+      <button class="cta-btn" onclick="showSummary()">Go to Summary →</button>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- PHASE 1 -->
+  <div class="phase-content active" id="phase-1">
+    <div class="phase-header" style="background: linear-gradient(135deg, #EBF2FF 0%, #F4F8FF 100%); border-color: #C0D4EE;">
+      <div class="phase-header-bg">🔬</div>
+      <div class="phase-header-eyebrow" style="color:#1456A0;">Phase 1 of 5</div>
+      <h2>Project Identification &amp; Scoping</h2>
+      <div class="phase-header-sub">Define what you're solving and establish SR&amp;ED eligibility before documentation begins.</div>
+    </div>
+
+    <div class="score-bar-wrap">
+      <div class="score-bar-top">
+        <span class="score-bar-label">Phase Eligibility Score</span>
+        <span class="score-val-pill" id="score-pill-1" style="background:#EBF2FF; color:#1456A0;">0% — Not Started</span>
+      </div>
+      <div class="score-track"><div class="score-fill" id="score-fill-1" style="width:0%; background:#1456A0;"></div></div>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">Project Name <span class="field-weight">5 pts</span></div>
+      <div class="field-hint">Use a technical name reflecting the engineering challenge — not a job name or well name. This will appear on your T661.</div>
+      <input type="text" id="f-project_name" placeholder="e.g. High-Viscosity Fluid Circulation System Optimization" oninput="updateScore()"/>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">Technological Uncertainty <span class="field-weight">25 pts</span></div>
+      <div class="field-hint">What specific technical problem could NOT be solved using existing knowledge, standard engineering, or published industry practice? This is the #1 SR&amp;ED eligibility question. Avoid "we weren't sure if it would work" — instead: "It was not known whether X could achieve Y under Z conditions."</div>
+      <textarea id="f-tech_uncertainty" placeholder="Describe the technological uncertainty your team faced — what was genuinely unknown and why existing knowledge couldn't resolve it." oninput="updateScore()"></textarea>
+      <button class="tip-toggle" onclick="toggleTip(this)">▶ CRA Guidance &amp; Example</button>
+      <div class="tip-box">🎯 <strong>Strong:</strong> "It was unknown whether nano-particle additives could maintain suspension in produced-water-based fluid systems above 85°C without phase separation — existing surfactant literature provided no data for this temperature-salinity combination."<br/><br/>⚠️ <strong>Weak:</strong> "We weren't sure if the new fluid blend would work in our wells."</div>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">Technological Advancement Sought <span class="field-weight">20 pts</span></div>
+      <div class="field-hint">What new knowledge or capability were you trying to create? SR&amp;ED requires advancement beyond the current state of technology — not just improvement of your own operations. Describe what your project aimed to achieve that wasn't previously known.</div>
+      <textarea id="f-tech_advancement" placeholder="What advancement in knowledge did your project aim to achieve, beyond what's currently known in your industry?" oninput="updateScore()"></textarea>
+      <button class="tip-toggle" onclick="toggleTip(this)">▶ CRA Guidance &amp; Example</button>
+      <div class="tip-box">🎯 <strong>Example:</strong> "The project aimed to develop a systematic understanding of the relationship between surfactant chain length and emulsification stability at SAGD reservoir temperatures — information not available in published literature or vendor technical data sheets."</div>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">Who Performed the Work <span class="field-weight">5 pts</span></div>
+      <div class="field-hint">Each category has different SR&amp;ED cost treatment. Employees: 100% of SR&amp;ED time eligible. Arm's-length contractors: 80% eligible. Non-arm's-length: lesser of actual cost or FMV.</div>
+      <div class="check-grid">
+        <label class="check-item" onclick="toggleCheck(this,'f-who_involved','Internal engineers / technical staff')"><input type="checkbox" /><span>Internal engineers / technical staff</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-who_involved','Field technicians / operators')"><input type="checkbox" /><span>Field technicians / operators</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-who_involved','Chemists or lab personnel')"><input type="checkbox" /><span>Chemists or lab personnel</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-who_involved','Third-party contractors (arm\'s length)')"><input type="checkbox" /><span>Third-party contractors (arm's length)</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-who_involved','University or research institution')"><input type="checkbox" /><span>University or research institution</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-who_involved','Tool designers / R&D staff')"><input type="checkbox" /><span>Tool designers / R&amp;D staff</span></label>
+      </div>
+
+      <!-- Custom categories -->
+      <div id="custom-list-f-who_involved" style="display:flex; flex-direction:column; gap:8px; margin-top:8px;"></div>
+
+      <!-- Add category row -->
+      <div id="custom-input-row-f-who_involved" style="display:none; margin-top:8px; gap:8px; align-items:center;">
+        <input type="text" id="custom-text-f-who_involved" placeholder="e.g. Drilling engineers / mud engineers"
+          style="flex:1; padding:9px 12px; border-radius:9px; border:1.5px solid var(--blue); font-size:13px; font-family:inherit;"
+          onkeydown="if(event.key==='Enter'){addCustomItem('f-who_involved');} if(event.key==='Escape'){cancelCustomItem('f-who_involved');}"/>
+        <button onclick="addCustomItem('f-who_involved')" class="custom-add-btn">Add</button>
+        <button onclick="cancelCustomItem('f-who_involved')" class="custom-cancel-btn">Cancel</button>
+      </div>
+
+      <button id="show-custom-btn-f-who_involved" onclick="showCustomInput('f-who_involved')" class="add-another-btn">+ Add another category</button>
+
+      <input type="hidden" id="f-who_involved" value=""/>
+
+      <div class="notes-section">
+        <div class="notes-section-label"><span>📝</span> Additional Notes</div>
+        <textarea class="notes-textarea" id="notes-f-who_involved"
+          placeholder="Add any additional context about who performed the SR&ED work — e.g. names or roles of key personnel, time periods, specific projects each person contributed to, or details about contractor arrangements."></textarea>
+      </div>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">Fiscal Year of Activity <span class="field-weight">5 pts</span></div>
+      <div class="field-hint">SR&amp;ED must be claimed within 18 months of fiscal year-end (federal T661). Alberta IEG has a 21-month window. Confirming the year ensures you're within filing deadlines.</div>
+      <input type="text" id="f-fiscal_year" placeholder="e.g. January 1 – December 31, 2024" oninput="updateScore()"/>
+    </div>
+
+    <div class="nav-footer">
+      <button class="btn btn-ghost" disabled>← Back</button>
+      <div class="progress-dots">
+        <div class="dot active" id="dot-1"></div>
+        <div class="dot" id="dot-2"></div>
+        <div class="dot" id="dot-3"></div>
+        <div class="dot" id="dot-4"></div>
+        <div class="dot" id="dot-5"></div>
+      </div>
+      <button class="btn btn-primary" onclick="showPhase(2)">Next: Activity Tracking →</button>
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="phase-content" id="phase-2">
+    <div class="phase-header" style="background: linear-gradient(135deg, #EDFAF6 0%, #F4FBF8 100%); border-color: #A8DDD0;">
+      <div class="phase-header-bg">📋</div>
+      <div class="phase-header-eyebrow" style="color:#0B7B6B;">Phase 2 of 5</div>
+      <h2>Contemporaneous Activity Tracking</h2>
+      <div class="phase-header-sub">Prove the work happened when you say it did. CRA requires records created at the time — not reconstructed after.</div>
+    </div>
+
+    <div class="score-bar-wrap">
+      <div class="score-bar-top">
+        <span class="score-bar-label">Phase Eligibility Score</span>
+        <span class="score-val-pill" id="score-pill-2" style="background:#EDFAF6; color:#0B7B6B;">0% — Not Started</span>
+      </div>
+      <div class="score-track"><div class="score-fill" id="score-fill-2" style="width:0%; background:#0B7B6B;"></div></div>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">How Was SR&amp;ED Time Tracked? <span class="field-weight">20 pts</span></div>
+      <div class="field-hint">CRA requires contemporaneous records — created at the time of the work, not reconstructed. "Reconstructed later" creates serious audit exposure. We can help build a tracking system going forward.</div>
+      <div class="check-grid">
+        <label class="check-item" onclick="toggleCheck(this,'f-time_tracking','Field tickets / day sheets with SR&ED project code')"><input type="checkbox"/><span>Field tickets / day sheets with SR&amp;ED project code</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-time_tracking','Employee timesheets (paper or digital)')"><input type="checkbox"/><span>Employee timesheets (paper or digital)</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-time_tracking','Project management software (e.g. Procore, FieldEdge)')"><input type="checkbox"/><span>Project management software (e.g. Procore, FieldEdge)</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-time_tracking','ERP or accounting system job codes')"><input type="checkbox"/><span>ERP or accounting system job codes</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-time_tracking','Informal tracking — reconstructed later')" style="border-color:#F0D0C0;"><input type="checkbox"/><span>⚠️ Informal tracking — reconstructed later</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-time_tracking','No formal time tracking yet')" style="border-color:#F0D0C0;"><input type="checkbox"/><span>⚠️ No formal time tracking yet</span></label>
+        <label class="check-item other-item" id="other-label-f-time_tracking" style="border-color:#C8D8E8; background:#F7FAFF;">
+          <input type="checkbox" id="other-cb-f-time_tracking" style="margin-top:2px; accent-color:var(--blue); flex-shrink:0;"/>
+          <span style="color:var(--muted); font-size:13px; flex:1;" id="other-span-f-time_tracking">Other…</span>
+          <input type="text" id="other-input-f-time_tracking" placeholder="Describe your tracking method"
+            style="display:none; flex:1; padding:2px 6px; border:none; border-bottom:1.5px solid var(--blue); background:transparent; font-size:13px; outline:none; font-family:inherit;"
+            oninput="otherTyping('f-time_tracking')"
+            onblur="otherCommit('f-time_tracking')"
+            onkeydown="if(event.key==='Enter'){this.blur();}"/>
+        </label>
+      </div>
+      <div id="custom-list-f-time_tracking" style="display:flex; flex-direction:column; gap:8px; margin-top:8px;"></div>
+      <div id="custom-input-row-f-time_tracking" style="display:none; margin-top:8px; gap:8px; align-items:center;">
+        <input type="text" id="custom-text-f-time_tracking" placeholder="e.g. Weekly safety meeting notes with SR&ED codes"
+          style="flex:1; padding:9px 12px; border-radius:9px; border:1.5px solid var(--blue); font-size:13px; font-family:inherit;"
+          onkeydown="if(event.key==='Enter'){addCustomItem('f-time_tracking');} if(event.key==='Escape'){cancelCustomItem('f-time_tracking');}"/>
+        <button onclick="addCustomItem('f-time_tracking')" class="custom-add-btn">Add</button>
+        <button onclick="cancelCustomItem('f-time_tracking')" class="custom-cancel-btn">Cancel</button>
+      </div>
+      <button id="show-custom-btn-f-time_tracking" onclick="showCustomInput('f-time_tracking')" class="add-another-btn">+ Add another category</button>
+      <input type="hidden" id="f-time_tracking" value=""/>
+
+      <div class="notes-section">
+        <div class="notes-section-label"><span>📝</span> Additional Notes</div>
+        <textarea class="notes-textarea" id="notes-f-time_tracking"
+          placeholder="Describe how time was recorded in practice — e.g. which software or form was used, how often records were updated, which employees or crews participated, and where records are currently stored."></textarea>
+      </div>
+
+      <button class="tip-toggle" onclick="toggleTip(this)">▶ Why this matters to CRA</button>
+      <div class="tip-box">⚠️ Reconstructed time records are the #1 reason SR&amp;ED claims are reduced on audit. Even simple daily field notes with hours and project descriptions significantly strengthen your position. Going forward, add a single "SR&amp;ED Project Code" field to existing field tickets — this one change is the highest-value documentation improvement you can make.</div>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">Field &amp; Lab Test Documentation <span class="field-weight">15 pts</span></div>
+      <div class="field-hint">Each document type is a piece of corroborating evidence. More variety = stronger audit defense. CRA looks for a paper trail that tells the story of what you tried, what failed, and what you learned.</div>
+      <div class="check-grid">
+        <label class="check-item" onclick="toggleCheck(this,'f-test_logs','Formal test protocols / run sheets')"><input type="checkbox"/><span>Formal test protocols / run sheets</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-test_logs','Daily or shift field logs')"><input type="checkbox"/><span>Daily or shift field logs</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-test_logs','Downhole data files (LAS, CSV, etc.)')"><input type="checkbox"/><span>Downhole data files (LAS, CSV, etc.)</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-test_logs','Mud / fluid reports')"><input type="checkbox"/><span>Mud / fluid reports</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-test_logs','Photos or video of test setup')"><input type="checkbox"/><span>Photos or video of test setup</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-test_logs','Equipment calibration records')"><input type="checkbox"/><span>Equipment calibration records</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-test_logs','Third-party lab analysis reports')"><input type="checkbox"/><span>Third-party lab analysis reports</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-test_logs','None captured yet')" style="border-color:#F0D0C0;"><input type="checkbox"/><span>⚠️ None captured yet</span></label>
+        <label class="check-item other-item" id="other-label-f-test_logs" style="border-color:#C8D8E8; background:#F7FAFF;">
+          <input type="checkbox" id="other-cb-f-test_logs" style="margin-top:2px; accent-color:var(--blue); flex-shrink:0;"/>
+          <span style="color:var(--muted); font-size:13px; flex:1;" id="other-span-f-test_logs">Other…</span>
+          <input type="text" id="other-input-f-test_logs" placeholder="Describe your documentation type"
+            style="display:none; flex:1; padding:2px 6px; border:none; border-bottom:1.5px solid var(--blue); background:transparent; font-size:13px; outline:none; font-family:inherit;"
+            oninput="otherTyping('f-test_logs')"
+            onblur="otherCommit('f-test_logs')"
+            onkeydown="if(event.key==='Enter'){this.blur();}"/>
+        </label>
+      </div>
+      <div id="custom-list-f-test_logs" style="display:flex; flex-direction:column; gap:8px; margin-top:8px;"></div>
+      <div id="custom-input-row-f-test_logs" style="display:none; margin-top:8px; gap:8px; align-items:center;">
+        <input type="text" id="custom-text-f-test_logs" placeholder="e.g. Wellbore temperature logs, completion reports"
+          style="flex:1; padding:9px 12px; border-radius:9px; border:1.5px solid var(--blue); font-size:13px; font-family:inherit;"
+          onkeydown="if(event.key==='Enter'){addCustomItem('f-test_logs');} if(event.key==='Escape'){cancelCustomItem('f-test_logs');}"/>
+        <button onclick="addCustomItem('f-test_logs')" class="custom-add-btn">Add</button>
+        <button onclick="cancelCustomItem('f-test_logs')" class="custom-cancel-btn">Cancel</button>
+      </div>
+      <button id="show-custom-btn-f-test_logs" onclick="showCustomInput('f-test_logs')" class="add-another-btn">+ Add another category</button>
+      <input type="hidden" id="f-test_logs" value=""/>
+
+      <div class="notes-section">
+        <div class="notes-section-label"><span>📝</span> Additional Notes</div>
+        <textarea class="notes-textarea" id="notes-f-test_logs"
+          placeholder="Describe where these documents are stored, who created them, and how they link to specific SR&ED experiments or test runs — e.g. 'Run sheets for trials 1–6 are in SharePoint under Project X / Field Data / Q3 2024'."></textarea>
+      </div>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">Were Failed Trials Documented? <span class="field-weight">10 pts</span></div>
+      <div class="field-hint">Failed trials are gold in SR&amp;ED claims — they prove systematic investigation and genuine uncertainty. CRA is suspicious of projects where everything worked perfectly the first time.</div>
+      <div class="radio-grid">
+        <label class="radio-item" onclick="selectRadio(this,'f-failures_documented','Yes — we have records of what failed and what we learned')"><input type="radio" name="failures"/><span>Yes — we have records of what failed and what we learned</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-failures_documented','Partially — some failures noted but not systematically')"><input type="radio" name="failures"/><span>Partially — some failures noted but not systematically</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-failures_documented','No — we only documented successes')"><input type="radio" name="failures"/><span>No — we only documented successes</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-failures_documented','Not applicable — project is still ongoing')"><input type="radio" name="failures"/><span>Not applicable — project is still ongoing</span></label>
+      </div>
+      <input type="hidden" id="f-failures_documented" value=""/>
+      <button class="tip-toggle" onclick="toggleTip(this)">▶ How to document failures effectively</button>
+      <div class="tip-box">🎯 Document each failure with: <strong>date, what was tried, the parameters tested, what went wrong, and what hypothesis that failure eliminated.</strong> This directly supports the "systematic investigation" eligibility pillar — one of the three things CRA must see for SR&amp;ED approval.</div>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">Subcontractor / Third-Party Documentation <span class="field-weight">5 pts</span></div>
+      <div class="field-hint">For arm's-length contractor costs, 80% is claimable if invoices tie back to SR&amp;ED work. Vague invoices (e.g. "consulting services") create audit risk — the SR&amp;ED scope must be identifiable.</div>
+      <div class="check-grid">
+        <label class="check-item" onclick="toggleCheck(this,'f-contractor_docs','Written contracts referencing SR&ED scope')"><input type="checkbox"/><span>Written contracts referencing SR&amp;ED scope</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-contractor_docs','Invoices with specific technical descriptions')"><input type="checkbox"/><span>Invoices with specific technical descriptions</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-contractor_docs','Deliverable reports from contractors')"><input type="checkbox"/><span>Deliverable reports from contractors</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-contractor_docs','No subcontractors involved')"><input type="checkbox"/><span>No subcontractors involved</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-contractor_docs','Subcontractors used but documentation is general/vague')" style="border-color:#F0D0C0;"><input type="checkbox"/><span>⚠️ Subcontractors used but documentation is general/vague</span></label>
+        <label class="check-item other-item" id="other-label-f-contractor_docs" style="border-color:#C8D8E8; background:#F7FAFF;">
+          <input type="checkbox" id="other-cb-f-contractor_docs" style="margin-top:2px; accent-color:var(--blue); flex-shrink:0;"/>
+          <span style="color:var(--muted); font-size:13px; flex:1;" id="other-span-f-contractor_docs">Other…</span>
+          <input type="text" id="other-input-f-contractor_docs" placeholder="Describe the documentation type"
+            style="display:none; flex:1; padding:2px 6px; border:none; border-bottom:1.5px solid var(--blue); background:transparent; font-size:13px; outline:none; font-family:inherit;"
+            oninput="otherTyping('f-contractor_docs')"
+            onblur="otherCommit('f-contractor_docs')"
+            onkeydown="if(event.key==='Enter'){this.blur();}"/>
+        </label>
+      </div>
+      <div id="custom-list-f-contractor_docs" style="display:flex; flex-direction:column; gap:8px; margin-top:8px;"></div>
+      <div id="custom-input-row-f-contractor_docs" style="display:none; margin-top:8px; gap:8px; align-items:center;">
+        <input type="text" id="custom-text-f-contractor_docs" placeholder="e.g. Email correspondence outlining SR&ED scope"
+          style="flex:1; padding:9px 12px; border-radius:9px; border:1.5px solid var(--blue); font-size:13px; font-family:inherit;"
+          onkeydown="if(event.key==='Enter'){addCustomItem('f-contractor_docs');} if(event.key==='Escape'){cancelCustomItem('f-contractor_docs');}"/>
+        <button onclick="addCustomItem('f-contractor_docs')" class="custom-add-btn">Add</button>
+        <button onclick="cancelCustomItem('f-contractor_docs')" class="custom-cancel-btn">Cancel</button>
+      </div>
+      <button id="show-custom-btn-f-contractor_docs" onclick="showCustomInput('f-contractor_docs')" class="add-another-btn">+ Add another category</button>
+      <input type="hidden" id="f-contractor_docs" value=""/>
+
+      <div class="notes-section">
+        <div class="notes-section-label"><span>📝</span> Additional Notes</div>
+        <textarea class="notes-textarea" id="notes-f-contractor_docs"
+          placeholder="List contractor names, the nature of their SR&ED work, approximate costs, and whether they are arm's-length or non-arm's-length. Note if invoices specifically reference the SR&ED project or if they need to be supplemented with a scope letter."></textarea>
+      </div>
+    </div>
+
+    <div class="nav-footer">
+      <button class="btn btn-ghost" onclick="showPhase(1)">← Back</button>
+      <div class="progress-dots">
+        <div class="dot done" id="dot-1b"></div>
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <button class="btn btn-primary" onclick="showPhase(3)">Next: Cost Capture →</button>
+    </div>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="phase-content" id="phase-3">
+    <div class="phase-header" style="background: linear-gradient(135deg, #F4EEFF 0%, #F9F5FF 100%); border-color: #C8AAEE;">
+      <div class="phase-header-bg">💰</div>
+      <div class="phase-header-eyebrow" style="color:#6B3A9B;">Phase 3 of 5</div>
+      <h2>Cost Capture</h2>
+      <div class="phase-header-sub">Identify and substantiate every eligible dollar — labour, materials, contractors, and overhead.</div>
+    </div>
+
+    <div class="score-bar-wrap">
+      <div class="score-bar-top">
+        <span class="score-bar-label">Phase Eligibility Score</span>
+        <span class="score-val-pill" id="score-pill-3" style="background:#F4EEFF; color:#6B3A9B;">0% — Not Started</span>
+      </div>
+      <div class="score-track"><div class="score-fill" id="score-fill-3" style="width:0%; background:#6B3A9B;"></div></div>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">SR&amp;ED Labour Costs <span class="field-weight">20 pts</span></div>
+      <div class="field-hint">SR&amp;ED labour is your most valuable cost category. For CCPCs: 35% refundable ITC on eligible labour. Hours × salary rate must be supportable from payroll records. Alberta IEG adds another 8–20% on top.</div>
+      <div class="radio-grid">
+        <label class="radio-item" onclick="selectRadio(this,'f-labour_tracked','Yes — hours coded to SR&ED projects in payroll/timesheets')"><input type="radio" name="labour"/><span>Yes — hours coded to SR&amp;ED projects in payroll/timesheets</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-labour_tracked','Partially — some employees tracked, others estimated')"><input type="radio" name="labour"/><span>Partially — some employees tracked, others estimated</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-labour_tracked','Not yet — will need to reconstruct from memory')"><input type="radio" name="labour"/><span>Not yet — will need to reconstruct from memory</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-labour_tracked','Not applicable — no employees worked on this project')"><input type="radio" name="labour"/><span>Not applicable — no employees worked on this project</span></label>
+      </div>
+      <input type="hidden" id="f-labour_tracked" value=""/>
+      <button class="tip-toggle" onclick="toggleTip(this)">▶ Quick win: improve your labour tracking now</button>
+      <div class="tip-box">💡 Even a partial timesheet is better than nothing. Going forward, add a simple "SR&amp;ED Project Code" field to your existing field tickets or timesheets — this one change significantly improves claim defensibility and takes less than 5 minutes per week per employee.</div>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">Materials &amp; Supplies Consumed <span class="field-weight">10 pts</span></div>
+      <div class="field-hint">Only materials "consumed or transformed" in SR&amp;ED work are eligible — not general overhead supplies. Test fluids, prototype components, downhole tools destroyed in testing all qualify. Tools still usable after testing do not.</div>
+      <div class="check-grid">
+        <label class="check-item" onclick="toggleCheck(this,'f-materials_tracked','Purchase orders flagged with SR&ED project code')"><input type="checkbox"/><span>Purchase orders flagged with SR&amp;ED project code</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-materials_tracked','Inventory drawdown records tied to SR&ED work')"><input type="checkbox"/><span>Inventory drawdown records tied to SR&amp;ED work</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-materials_tracked','Invoices retained and linked to specific tests')"><input type="checkbox"/><span>Invoices retained and linked to specific tests</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-materials_tracked','Materials tracked in accounting system (QuickBooks/Sage)')"><input type="checkbox"/><span>Materials tracked in accounting system (QuickBooks/Sage)</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-materials_tracked','Materials used but not separately tracked')" style="border-color:#F0D0C0;"><input type="checkbox"/><span>⚠️ Materials used but not separately tracked</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-materials_tracked','No materials consumed')"><input type="checkbox"/><span>No materials consumed (service/software project)</span></label>
+        <label class="check-item other-item" id="other-label-f-materials_tracked" style="border-color:#C8D8E8; background:#F7FAFF;">
+          <input type="checkbox" id="other-cb-f-materials_tracked" style="margin-top:2px; accent-color:var(--blue); flex-shrink:0;"/>
+          <span style="color:var(--muted); font-size:13px; flex:1;" id="other-span-f-materials_tracked">Other…</span>
+          <input type="text" id="other-input-f-materials_tracked" placeholder="Describe how materials are tracked"
+            style="display:none; flex:1; padding:2px 6px; border:none; border-bottom:1.5px solid var(--blue); background:transparent; font-size:13px; outline:none; font-family:inherit;"
+            oninput="otherTyping('f-materials_tracked')"
+            onblur="otherCommit('f-materials_tracked')"
+            onkeydown="if(event.key==='Enter'){this.blur();}"/>
+        </label>
+      </div>
+      <div id="custom-list-f-materials_tracked" style="display:flex; flex-direction:column; gap:8px; margin-top:8px;"></div>
+      <div id="custom-input-row-f-materials_tracked" style="display:none; margin-top:8px; gap:8px; align-items:center;">
+        <input type="text" id="custom-text-f-materials_tracked" placeholder="e.g. Field inventory tags tied to job number"
+          style="flex:1; padding:9px 12px; border-radius:9px; border:1.5px solid var(--blue); font-size:13px; font-family:inherit;"
+          onkeydown="if(event.key==='Enter'){addCustomItem('f-materials_tracked');} if(event.key==='Escape'){cancelCustomItem('f-materials_tracked');}"/>
+        <button onclick="addCustomItem('f-materials_tracked')" class="custom-add-btn">Add</button>
+        <button onclick="cancelCustomItem('f-materials_tracked')" class="custom-cancel-btn">Cancel</button>
+      </div>
+      <button id="show-custom-btn-f-materials_tracked" onclick="showCustomInput('f-materials_tracked')" class="add-another-btn">+ Add another category</button>
+      <input type="hidden" id="f-materials_tracked" value=""/>
+
+      <div class="notes-section">
+        <div class="notes-section-label"><span>📝</span> Additional Notes</div>
+        <textarea class="notes-textarea" id="notes-f-materials_tracked"
+          placeholder="Describe the types of materials consumed in SR&ED experiments — e.g. test fluids, chemical additives, prototype components, downhole tools lost in hole. Note approximate quantities and costs where known, and how they are distinguished from non-SR&ED materials in your records."></textarea>
+      </div>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">Overhead Method <span class="field-weight">5 pts</span></div>
+      <div class="field-hint">For most companies, the Proxy Method is simpler and often more advantageous — overhead is automatically calculated as 55% of SR&amp;ED salaries with no separate tracking required.</div>
+      <div class="radio-grid">
+        <label class="radio-item" onclick="selectRadio(this,'f-proxy_method','Proxy Method — overhead auto-calculated as 55% of SR&ED salaries')"><input type="radio" name="proxy"/><span>Proxy Method — overhead auto-calculated as 55% of SR&amp;ED salaries (recommended)</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-proxy_method','Traditional Method — tracking all overhead costs directly')"><input type="radio" name="proxy"/><span>Traditional Method — tracking all overhead costs directly</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-proxy_method','Unsure — need guidance on which to use')"><input type="radio" name="proxy"/><span>Unsure — need guidance on which to use</span></label>
+      </div>
+      <input type="hidden" id="f-proxy_method" value=""/>
+      <button class="tip-toggle" onclick="toggleTip(this)">▶ Proxy Method example calculation</button>
+      <div class="tip-box">📊 <strong>Proxy Method example:</strong> $200,000 SR&amp;ED salaries × 55% = $110,000 overhead — no overhead tracking required. Total eligible: $310,000. At 35% refundable ITC = <strong>$108,500 federal refund</strong> before Alberta IEG.<br/><br/>The Traditional Method only wins if your actual overhead rate exceeds 55% and you have rigorous overhead tracking already in place.</div>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">Contractor / Subcontractor Costs <span class="field-weight">5 pts</span></div>
+      <div class="field-hint">80% of arm's-length contractor costs are claimable. Non-arm's-length (related parties) are claimable at the lesser of actual cost or FMV. Invoices must specifically describe the SR&amp;ED work.</div>
+      <input type="text" id="f-contractor_costs" placeholder="Estimated total paid to arm's-length contractors for SR&ED work (e.g. $45,000)" oninput="updateScore()"/>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">Cost Accumulation Schedule <span class="field-weight">10 pts</span></div>
+      <div class="field-hint">Monthly reconciliation of SR&amp;ED costs is the easiest way to ensure nothing gets missed. Year-end reconstruction is common but creates gaps — especially for materials and contractor invoices not flagged at the time.</div>
+      <div class="radio-grid">
+        <label class="radio-item" onclick="selectRadio(this,'f-cost_accum','Yes — ongoing spreadsheet mapping invoices/payroll to SR&ED projects')"><input type="radio" name="costaccum"/><span>Yes — ongoing spreadsheet mapping invoices/payroll to SR&amp;ED projects</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-cost_accum','Partially — some costs captured, others to be reconciled at year-end')"><input type="radio" name="costaccum"/><span>Partially — some costs captured, others to be reconciled at year-end</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-cost_accum','No — will compile at year-end')"><input type="radio" name="costaccum"/><span>No — will compile at year-end</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-cost_accum','Plan to build this process for future years')"><input type="radio" name="costaccum"/><span>Plan to build this process for future years</span></label>
+      </div>
+      <input type="hidden" id="f-cost_accum" value=""/>
+    </div>
+
+    <div class="nav-footer">
+      <button class="btn btn-ghost" onclick="showPhase(2)">← Back</button>
+      <div class="progress-dots">
+        <div class="dot done"></div>
+        <div class="dot done"></div>
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <button class="btn btn-primary" onclick="showPhase(4)">Next: Technical Narrative →</button>
+    </div>
+  </div>
+
+  <!-- PHASE 4 -->
+  <div class="phase-content" id="phase-4">
+    <div class="phase-header" style="background: linear-gradient(135deg, #FFF5EA 0%, #FFFAF4 100%); border-color: #E8C888;">
+      <div class="phase-header-bg">📝</div>
+      <div class="phase-header-eyebrow" style="color:#8A4A00;">Phase 4 of 5</div>
+      <h2>Project Wrap-Up &amp; Technical Narrative</h2>
+      <div class="phase-header-sub">Build the technical story CRA will review. The T661 project description lives or dies here.</div>
+    </div>
+
+    <div class="score-bar-wrap">
+      <div class="score-bar-top">
+        <span class="score-bar-label">Phase Eligibility Score</span>
+        <span class="score-val-pill" id="score-pill-4" style="background:#FFF5EA; color:#8A4A00;">0% — Not Started</span>
+      </div>
+      <div class="score-track"><div class="score-fill" id="score-fill-4" style="width:0%; background:#C47D00;"></div></div>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">Systematic Investigation Description <span class="field-weight">20 pts</span></div>
+      <div class="field-hint">SR&amp;ED requires "systematic investigation by experiment or analysis." This means a structured approach — not trial and error. Document the iterative logic: hypothesis → test → result → revised hypothesis. CRA is looking for scientific method, even in a field environment.</div>
+      <textarea id="f-systematic_inv" placeholder="Describe the structured, logical approach your team used. What hypotheses did you form? What test plan did you follow? How did results inform next steps?" oninput="updateScore()"></textarea>
+      <button class="tip-toggle" onclick="toggleTip(this)">▶ CRA Guidance &amp; Example</button>
+      <div class="tip-box">🎯 <strong>Strong example:</strong> "We began with a base fluid formulation and systematically varied surfactant concentration across 5 levels while holding temperature and pressure constant, recording viscosity at each step. Failure of the 3% concentration trial led us to revise our hypothesis regarding CMC thresholds and test a modified formulation at 4.5%."<br/><br/>This shows hypothesis → test → failure → learning → revised hypothesis. That's the scientific method CRA needs to see.</div>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">Results &amp; Knowledge Gained <span class="field-weight">15 pts</span></div>
+      <div class="field-hint">SR&amp;ED rewards knowledge creation, not just successful outcomes. A project that definitively proved an approach doesn't work is still SR&amp;ED-eligible. Focus on what your team now knows that wasn't known before the project.</div>
+      <textarea id="f-results" placeholder="What did you learn? What new technical knowledge was created? What hypotheses were confirmed or eliminated — even if the project didn't fully succeed?" oninput="updateScore()"></textarea>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">Project Summary Sheet Status <span class="field-weight">10 pts</span></div>
+      <div class="field-hint">The Project Summary Sheet is a structured internal document that becomes the backbone of your T661 technical description. Easiest to write within weeks of the work — not 14 months later during tax prep.</div>
+      <div class="radio-grid">
+        <label class="radio-item" onclick="selectRadio(this,'f-summary_sheet','Complete — all 5 sections filled out by technical lead')"><input type="radio" name="summary"/><span>Complete — all 5 sections filled out by technical lead</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-summary_sheet','In progress — partially drafted')"><input type="radio" name="summary"/><span>In progress — partially drafted</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-summary_sheet','Not started — will complete before claim filing')"><input type="radio" name="summary"/><span>Not started — will complete before claim filing</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-summary_sheet','Not sure what this is')"><input type="radio" name="summary"/><span>Not sure what this is — need guidance</span></label>
+      </div>
+      <input type="hidden" id="f-summary_sheet" value=""/>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">Technical Staff Audit Readiness <span class="field-weight">10 pts</span></div>
+      <div class="field-hint">In a CRA technical review, the reviewer may interview your engineers or field personnel. Their ability to articulate the technological uncertainty in their own words — without reading from a script — is one of the strongest audit defenses.</div>
+      <div class="radio-grid">
+        <label class="radio-item" onclick="selectRadio(this,'f-staff_ready','Engineers / field leads could clearly explain the uncertainty and approach to CRA')"><input type="radio" name="staff"/><span>Engineers / field leads could clearly explain the uncertainty and approach to CRA</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-staff_ready','They could explain it with some coaching')"><input type="radio" name="staff"/><span>They could explain it with some coaching</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-staff_ready','Staff turnover — original people may not be available')"><input type="radio" name="staff"/><span>Staff turnover — original people may not be available</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-staff_ready','Unlikely — team is not familiar with SR&ED framing')"><input type="radio" name="staff"/><span>Unlikely — team is not familiar with SR&amp;ED framing</span></label>
+      </div>
+      <input type="hidden" id="f-staff_ready" value=""/>
+      <button class="tip-toggle" onclick="toggleTip(this)">▶ How to coach technical staff</button>
+      <div class="tip-box">🎯 Coach your technical staff to answer two questions in plain language: <strong>"What didn't you know at the start of this project?"</strong> and <strong>"Why couldn't you just look that up?"</strong> Practise this conversation before any CRA contact. The interviewer is often a technical advisor with an engineering background — plain-language, specific answers land better than technical jargon.</div>
+    </div>
+
+    <div class="nav-footer">
+      <button class="btn btn-ghost" onclick="showPhase(3)">← Back</button>
+      <div class="progress-dots">
+        <div class="dot done"></div>
+        <div class="dot done"></div>
+        <div class="dot done"></div>
+        <div class="dot active"></div>
+        <div class="dot"></div>
+      </div>
+      <button class="btn btn-primary" onclick="showPhase(5)">Next: Claim Preparation →</button>
+    </div>
+  </div>
+
+  <!-- PHASE 5 -->
+  <div class="phase-content" id="phase-5">
+    <div class="phase-header" style="background: linear-gradient(135deg, #E6FAF8 0%, #F2FBF9 100%); border-color: #88D4CC;">
+      <div class="phase-header-bg">📄</div>
+      <div class="phase-header-eyebrow" style="color:#1A6B6B;">Phase 5 of 5</div>
+      <h2>Annual Claim Preparation</h2>
+      <div class="phase-header-sub">Assemble the T661 package, calculate your ITC + Alberta IEG, and file before the deadline.</div>
+    </div>
+
+    <div class="score-bar-wrap">
+      <div class="score-bar-top">
+        <span class="score-bar-label">Phase Eligibility Score</span>
+        <span class="score-val-pill" id="score-pill-5" style="background:#E6FAF8; color:#1A6B6B;">0% — Not Started</span>
+      </div>
+      <div class="score-track"><div class="score-fill" id="score-fill-5" style="width:0%; background:#1A6B6B;"></div></div>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">Filing Deadline Awareness <span class="field-weight">10 pts</span></div>
+      <div class="field-hint">Federal T661: must be filed within 18 months of fiscal year-end. Alberta IEG (AT1 Schedule 29): within 21 months. Missing these deadlines permanently forfeits the claim — no extensions. Earlier filing = earlier refund.</div>
+      <div class="radio-grid">
+        <label class="radio-item" onclick="selectRadio(this,'f-deadline','Yes — we know our 18-month federal and 21-month provincial deadlines')"><input type="radio" name="deadline"/><span>Yes — we know our 18-month federal and 21-month provincial deadlines</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-deadline','Aware of federal (T661) deadline only')"><input type="radio" name="deadline"/><span>Aware of federal (T661) deadline only</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-deadline','Not sure — need to calculate based on fiscal year-end')"><input type="radio" name="deadline"/><span>Not sure — need to calculate based on fiscal year-end</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-deadline','We may be at risk of missing a deadline')"><input type="radio" name="deadline"/><span>⚠️ We may be at risk of missing a deadline</span></label>
+      </div>
+      <input type="hidden" id="f-deadline" value=""/>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">T661 Technical Description Readiness <span class="field-weight">15 pts</span></div>
+      <div class="field-hint">The T661 requires three things per project: (1) the technological uncertainty, (2) the technological advancement sought, and (3) the systematic investigation conducted. Each must be specific, technical, and in your own words — generic descriptions are the primary trigger for CRA technical reviews.</div>
+      <div class="radio-grid">
+        <label class="radio-item" onclick="selectRadio(this,'f-t661','Draft complete — ready for review')"><input type="radio" name="t661"/><span>Draft complete — ready for review</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-t661','In progress — technical narrative being written')"><input type="radio" name="t661"/><span>In progress — technical narrative being written</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-t661','Not started — need to begin from Project Summary Sheets')"><input type="radio" name="t661"/><span>Not started — need to begin from Project Summary Sheets</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-t661','Need help — not sure how to structure the T661')"><input type="radio" name="t661"/><span>Need help — not sure how to structure the T661</span></label>
+      </div>
+      <input type="hidden" id="f-t661" value=""/>
+      <button class="tip-toggle" onclick="toggleTip(this)">▶ T661 key sections to know</button>
+      <div class="tip-box">📋 <strong>T661 critical boxes:</strong><br/>• <strong>Box 242</strong> — Technological uncertainty (what you didn't know)<br/>• <strong>Box 244</strong> — Work performed (the systematic investigation)<br/>• <strong>Box 246</strong> — Technological advancement (what you learned / achieved)<br/><br/>Each should be 150–400 words for a well-documented project. Bullet-point style is acceptable. Avoid marketing language — write like an engineer reporting to a peer reviewer.</div>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">SR&amp;ED Expenditure Schedule (Schedule 31) <span class="field-weight">10 pts</span></div>
+      <div class="field-hint">Schedule 31 is the financial counterpart to the T661 — it maps your SR&amp;ED expenditures to the ITC calculation. It must be reconcilable to your T2 income tax return. Discrepancies between Schedule 31 and your GL are an audit flag.</div>
+      <div class="radio-grid">
+        <label class="radio-item" onclick="selectRadio(this,'f-sch31','Complete — reconciled to payroll and GL')"><input type="radio" name="sch31"/><span>Complete — reconciled to payroll and GL</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-sch31','In progress — most costs identified')"><input type="radio" name="sch31"/><span>In progress — most costs identified</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-sch31','Not started — need to compile from accounting records')"><input type="radio" name="sch31"/><span>Not started — need to compile from accounting records</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-sch31','Need help identifying eligible vs. ineligible costs')"><input type="radio" name="sch31"/><span>Need help identifying eligible vs. ineligible costs</span></label>
+      </div>
+      <input type="hidden" id="f-sch31" value=""/>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">Alberta IEG (Provincial Credit) Awareness <span class="field-weight">10 pts</span></div>
+      <div class="field-hint">Alberta's Innovation Employment Grant provides 8% base rate on eligible R&amp;D spending, or 20% on spending above the prior 2-year average. Combined with the federal ITC, total recovery can reach 40–55+ cents per dollar of SR&amp;ED spend.</div>
+      <div class="radio-grid">
+        <label class="radio-item" onclick="selectRadio(this,'f-ieg','Yes — claiming both federal ITC and Alberta IEG')"><input type="radio" name="ieg"/><span>Yes — claiming both federal ITC and Alberta IEG</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-ieg','Aware but not sure how to calculate the IEG')"><input type="radio" name="ieg"/><span>Aware but not sure how to calculate the IEG</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-ieg','Not aware of the Alberta IEG program')"><input type="radio" name="ieg"/><span>Not aware of the Alberta IEG program</span></label>
+        <label class="radio-item" onclick="selectRadio(this,'f-ieg','We operate outside Alberta — not applicable')"><input type="radio" name="ieg"/><span>We operate outside Alberta — not applicable</span></label>
+      </div>
+      <input type="hidden" id="f-ieg" value=""/>
+      <button class="tip-toggle" onclick="toggleTip(this)">▶ First-time filer advantage</button>
+      <div class="tip-box">💡 <strong>First-time filers:</strong> Your 2-year average R&amp;D base is $0, meaning ALL eligible spending qualifies at the 20% incremental IEG rate in year one. This makes early-year claims disproportionately valuable — a $300,000 SR&amp;ED spend could generate an additional $60,000 in Alberta IEG on top of your federal ITC.<br/><br/>Note: IEG counts as provincial assistance and reduces your federal ITC base — this is accounted for in the combined calculation.</div>
+    </div>
+
+    <div class="field-card">
+      <div class="field-label">Supporting Documents Package <span class="field-weight">10 pts</span></div>
+      <div class="field-hint">CRA can request this package up to 4 years post-assessment. Retain all records for at least 6 years. Cloud-based storage in an organized folder structure is strongly recommended.</div>
+      <div class="check-grid">
+        <label class="check-item" onclick="toggleCheck(this,'f-docs_package','Project Register')"><input type="checkbox"/><span>Project Register (list of all SR&amp;ED projects)</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-docs_package','Project Initiation Sheets')"><input type="checkbox"/><span>Project Initiation Sheets</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-docs_package','Test logs / field data')"><input type="checkbox"/><span>Test logs / field data</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-docs_package','Employee time records')"><input type="checkbox"/><span>Employee time records</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-docs_package','Payroll excerpts for SR&ED employees')"><input type="checkbox"/><span>Payroll excerpts for SR&amp;ED employees</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-docs_package','Material invoices and POs')"><input type="checkbox"/><span>Material invoices and POs</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-docs_package','Contractor invoices with SR&ED scope')"><input type="checkbox"/><span>Contractor invoices with SR&amp;ED scope descriptions</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-docs_package','Project Summary Sheets')"><input type="checkbox"/><span>Project Summary Sheets</span></label>
+        <label class="check-item" onclick="toggleCheck(this,'f-docs_package','Filed T661 and Schedule 31 copies')"><input type="checkbox"/><span>Filed T661 and Schedule 31 copies</span></label>
+        <label class="check-item other-item" id="other-label-f-docs_package" style="border-color:#C8D8E8; background:#F7FAFF;">
+          <input type="checkbox" id="other-cb-f-docs_package" style="margin-top:2px; accent-color:var(--blue); flex-shrink:0;"/>
+          <span style="color:var(--muted); font-size:13px; flex:1;" id="other-span-f-docs_package">Other…</span>
+          <input type="text" id="other-input-f-docs_package" placeholder="Describe the document type"
+            style="display:none; flex:1; padding:2px 6px; border:none; border-bottom:1.5px solid var(--blue); background:transparent; font-size:13px; outline:none; font-family:inherit;"
+            oninput="otherTyping('f-docs_package')"
+            onblur="otherCommit('f-docs_package')"
+            onkeydown="if(event.key==='Enter'){this.blur();}"/>
+        </label>
+      </div>
+      <div id="custom-list-f-docs_package" style="display:flex; flex-direction:column; gap:8px; margin-top:8px;"></div>
+      <div id="custom-input-row-f-docs_package" style="display:none; margin-top:8px; gap:8px; align-items:center;">
+        <input type="text" id="custom-text-f-docs_package" placeholder="e.g. Engineering drawings, well completion reports"
+          style="flex:1; padding:9px 12px; border-radius:9px; border:1.5px solid var(--blue); font-size:13px; font-family:inherit;"
+          onkeydown="if(event.key==='Enter'){addCustomItem('f-docs_package');} if(event.key==='Escape'){cancelCustomItem('f-docs_package');}"/>
+        <button onclick="addCustomItem('f-docs_package')" class="custom-add-btn">Add</button>
+        <button onclick="cancelCustomItem('f-docs_package')" class="custom-cancel-btn">Cancel</button>
+      </div>
+      <button id="show-custom-btn-f-docs_package" onclick="showCustomInput('f-docs_package')" class="add-another-btn">+ Add another category</button>
+      <input type="hidden" id="f-docs_package" value=""/>
+
+      <div class="notes-section">
+        <div class="notes-section-label"><span>📝</span> Additional Notes</div>
+        <textarea class="notes-textarea" id="notes-f-docs_package"
+          placeholder="Describe where your SR&ED records are currently stored and how they are organized — e.g. folder structure in SharePoint or Google Drive, who has access, whether records are complete for all projects or only some, and any gaps you're aware of that need to be addressed before filing."></textarea>
+      </div>
+    </div>
+
+    <div class="nav-footer">
+      <button class="btn btn-ghost" onclick="showPhase(4)">← Back</button>
+      <div class="progress-dots">
+        <div class="dot done"></div>
+        <div class="dot done"></div>
+        <div class="dot done"></div>
+        <div class="dot done"></div>
+        <div class="dot active"></div>
+      </div>
+      <button class="btn btn-teal" onclick="showSummary()">View Readiness Report →</button>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div id="summary-view">
+    <div class="summary-hero">
+      <div class="summary-score-ring">
+        <div>
+          <div class="big-score" id="sum-big-score">—</div>
+          <div class="big-score-label" id="sum-big-label">Overall Readiness</div>
+        </div>
+        <div class="summary-desc" id="sum-desc"></div>
+      </div>
+      <div class="summary-hero-bg">📊</div>
+    </div>
+
+    <div class="phase-grid" id="phase-grid"></div>
+
+    <div class="gaps-section" id="gaps-section"></div>
+
+    <!-- EXPORT DOCUMENTS PANEL -->
+    <div class="export-panel">
+      <div class="export-panel-header">
+        <div>
+          <h3>📥 Download &amp; Export</h3>
+          <p>Generate professional documents from your responses — preview and print to PDF, or download an editable Word (.docx) file.</p>
+        </div>
+      </div>
+
+      <div class="export-grid">
+        <div class="export-card">
+          <div class="export-card-icon" style="background:#EBF2FF;">📊</div>
+          <div class="export-card-body">
+            <h4>Readiness Report</h4>
+            <p>Full summary of all responses, phase scores, and priority gaps — branded for your practice.</p>
+          </div>
+          <div class="export-card-actions">
+            <button class="export-action-btn" onclick="exportReport()">🖨️ PDF Preview</button>
+            <button class="export-action-btn export-action-btn-word" onclick="exportReportWord()">📝 Word (.docx)</button>
+          </div>
+        </div>
+
+        <div class="export-card">
+          <div class="export-card-icon" style="background:#FFF5EA;">📝</div>
+          <div class="export-card-body">
+            <h4>T661 Project Description</h4>
+            <p>Structured to mirror T661 Boxes 242, 244 &amp; 246 — ready to paste into certified tax software.</p>
+          </div>
+          <div class="export-card-actions">
+            <button class="export-action-btn" onclick="exportT661()">🖨️ PDF Preview</button>
+            <button class="export-action-btn export-action-btn-word" onclick="exportT661Word()">📝 Word (.docx)</button>
+          </div>
+        </div>
+
+        <div class="export-card">
+          <div class="export-card-icon" style="background:#E6FAF8;">🧮</div>
+          <div class="export-card-body">
+            <h4>Expenditure &amp; IEG Summary</h4>
+            <p>Cost schedule structured for federal Schedule 31 and Alberta AT1 Schedule 29 line items.</p>
+          </div>
+          <div class="export-card-actions">
+            <button class="export-action-btn" onclick="exportExpenditure()">🖨️ PDF Preview</button>
+            <button class="export-action-btn export-action-btn-word" onclick="exportExpenditureWord()">📝 Word (.docx)</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="export-note">
+        <strong>Note on filing:</strong> The official T661, Schedule 31, and AT1 Schedule 29 are filed electronically through certified tax software as part of the T2 corporate return. These exports are <em>preparation documents</em> — they organize your information into the exact structure your accountant or tax software needs, so nothing gets missed at filing time.
+      </div>
+    </div>
+
+    <div class="nav-footer">
+      <button class="btn btn-ghost" onclick="showPhase(5)">← Back to Phase 5</button>
+      <button class="btn btn-primary" onclick="resetAll()">Start New Project</button>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<script>
+const PHASES = [
+  {
+    id:1, icon:"🔬", name:"Phase 1", label:"Identification & Scoping", color:"#1456A0",
+    scoreColor:"#1456A0", scoreBg:"#EBF2FF",
+    fields:[
+      {id:"f-project_name",    type:"text",   weight:5},
+      {id:"f-tech_uncertainty",type:"textarea",weight:25},
+      {id:"f-tech_advancement",type:"textarea",weight:20},
+      {id:"f-who_involved",    type:"check",  weight:5,  bad:[]},
+      {id:"f-fiscal_year",     type:"text",   weight:5},
+    ]
+  },
+  {
+    id:2, icon:"📋", name:"Phase 2", label:"Activity Tracking", color:"#0B7B6B",
+    scoreColor:"#0B7B6B", scoreBg:"#EDFAF6",
+    fields:[
+      {id:"f-time_tracking",    type:"check", weight:20, bad:["Informal tracking — reconstructed later","No formal time tracking yet"]},
+      {id:"f-test_logs",        type:"check", weight:15, bad:["None captured yet"]},
+      {id:"f-failures_documented",type:"radio",weight:10, good:["Yes —"]},
+      {id:"f-contractor_docs",  type:"check", weight:5,  bad:["Subcontractors used but documentation is general/vague"]},
+    ]
+  },
+  {
+    id:3, icon:"💰", name:"Phase 3", label:"Cost Capture", color:"#6B3A9B",
+    scoreColor:"#6B3A9B", scoreBg:"#F4EEFF",
+    fields:[
+      {id:"f-labour_tracked",type:"radio",weight:20,good:["Yes —"]},
+      {id:"f-materials_tracked",type:"check",weight:10,bad:["Materials used but not separately tracked"]},
+      {id:"f-proxy_method",  type:"radio",weight:5, good:["Proxy Method"]},
+      {id:"f-contractor_costs",type:"text",weight:5},
+      {id:"f-cost_accum",    type:"radio",weight:10,good:["Yes —"]},
+    ]
+  },
+  {
+    id:4, icon:"📝", name:"Phase 4", label:"Technical Narrative", color:"#C47D00",
+    scoreColor:"#8A4A00", scoreBg:"#FFF5EA",
+    fields:[
+      {id:"f-systematic_inv",type:"textarea",weight:20},
+      {id:"f-results",       type:"textarea",weight:15},
+      {id:"f-summary_sheet", type:"radio",   weight:10,good:["Complete"]},
+      {id:"f-staff_ready",   type:"radio",   weight:10,good:["Engineers"]},
+    ]
+  },
+  {
+    id:5, icon:"📄", name:"Phase 5", label:"Claim Preparation", color:"#1A6B6B",
+    scoreColor:"#1A6B6B", scoreBg:"#E6FAF8",
+    fields:[
+      {id:"f-deadline",    type:"radio",weight:10,good:["Yes —"]},
+      {id:"f-t661",        type:"radio",weight:15,good:["Draft complete"]},
+      {id:"f-sch31",       type:"radio",weight:10,good:["Complete"]},
+      {id:"f-ieg",         type:"radio",weight:10,good:["Yes —"]},
+      {id:"f-docs_package",type:"check",weight:10,bad:[]},
+    ]
+  }
+];
+
+// Field labels + specific "what's missing / how to fix" suggestions.
+// status: "missing" (nothing entered), "weak" (partial/thin), or "risk" (a risky answer was chosen)
+const FIELD_INFO = {
+  "f-project_name": { label:"Project Name",
+    missing:"Give the project a specific technical title (e.g. \"High-Viscosity Fluid Circulation System Optimization\"), not a job or well name. This becomes Line 240 of the T661." },
+  "f-tech_uncertainty": { label:"Technological Uncertainty", critical:true,
+    missing:"This is the single most important part of a SR&ED claim and is currently empty. State what was technologically unknown and could not be resolved with standard practice or public information. Frame it as: \"It was not known whether X could achieve Y under Z conditions.\"",
+    weak:"Expand this into a full description. A strong answer names the specific technical unknown and explains why existing knowledge, vendor data, or standard engineering couldn't resolve it. One short sentence won't survive a CRA technical review." },
+  "f-tech_advancement": { label:"Technological Advancement", critical:true,
+    missing:"Describe the advancement in the underlying technology you sought — the new knowledge or capability created, beyond your own operational improvement. This maps to T661 Box 246.",
+    weak:"Add detail on what new technical knowledge the work generated. CRA wants advancement to the technology base, not just a better outcome for your business." },
+  "f-who_involved": { label:"Who Performed the Work",
+    missing:"Identify who did the work — employees, contractors, or specialists. This drives cost eligibility (employees 100%, arm's-length contractors 80%).",
+    weak:"Add the remaining personnel categories, and use the Additional Notes to name key people and their roles." },
+  "f-fiscal_year": { label:"Fiscal Year of Activity",
+    missing:"Enter the fiscal year the work took place in. This determines your 18-month T661 and 21-month Alberta IEG filing deadlines." },
+  "f-time_tracking": { label:"Time Tracking Method",
+    missing:"Record how SR&ED time was tracked. Contemporaneous time records are the backbone of a labour claim — without them, the labour portion is difficult to defend.",
+    risk:"You indicated time was reconstructed or not formally tracked. This is the #1 cause of reduced claims on audit. Going forward, add an \"SR&ED project code\" to existing field tickets or timesheets to capture time at the point of work." },
+  "f-test_logs": { label:"Field & Lab Test Documentation",
+    missing:"No supporting test documentation is recorded. CRA expects contemporaneous evidence (run sheets, field logs, data files, photos) that tells the story of what you tried and observed.",
+    weak:"Capture a wider variety of evidence. More document types — logs, data files, reports, photos — create a stronger audit trail." },
+  "f-failures_documented": { label:"Failure Documentation",
+    missing:"Indicate whether failed trials were documented. Failures are strong SR&ED evidence — they prove genuine uncertainty and systematic investigation.",
+    weak:"Aim to document failures systematically: date, what was tried, parameters, what went wrong, and which hypothesis it eliminated." },
+  "f-contractor_docs": { label:"Contractor Documentation",
+    weak:"If contractors performed SR&ED work, ensure invoices specifically reference the SR&ED scope. Vague invoices (\"consulting services\") create audit risk and may not be claimable." },
+  "f-labour_tracked": { label:"Labour Cost Tracking", critical:true,
+    missing:"Labour is usually the largest SR&ED cost. Record whether hours are coded to the project in payroll or timesheets.",
+    risk:"Labour hours aren't reliably tracked. Reconstructed labour is the most-scrutinized figure on audit. Even a partial timesheet is better than an estimate — start coding hours to the project now." },
+  "f-materials_tracked": { label:"Materials Tracking",
+    missing:"Record how materials consumed or transformed in the experiments are tracked. Only materials used up or transformed in the SR&ED work are eligible.",
+    weak:"Tie material purchases to the project with PO flags or a project code so eligible materials can be separated from general supplies." },
+  "f-proxy_method": { label:"Overhead Method",
+    missing:"Choose an overhead method. The Proxy Method (55% of SR&ED salaries, no separate tracking) is simpler and usually advantageous.",
+    weak:"Confirm your overhead method. If unsure, the Proxy Method is the safer default for most claims." },
+  "f-contractor_costs": { label:"Contractor Costs",
+    missing:"If arm's-length contractors did SR&ED work, enter the total so 80% can be added to your eligible pool. Leave blank only if no contractors were used." },
+  "f-cost_accum": { label:"Cost Accumulation Schedule",
+    missing:"Set up a schedule that maps invoices and payroll to the SR&ED project. Monthly reconciliation prevents missed costs at year-end.",
+    weak:"Move toward ongoing (monthly) cost reconciliation rather than year-end reconstruction — it captures materials and contractor costs that are easily missed later." },
+  "f-systematic_inv": { label:"Systematic Investigation", critical:true,
+    missing:"Describe the systematic investigation — the hypotheses, experiments or analyses, and how results informed the next step. This maps to T661 Box 244 and is required for eligibility.",
+    weak:"Expand this into a clear hypothesis → test → result → revised-hypothesis narrative. CRA needs to see structured scientific method, not trial and error." },
+  "f-results": { label:"Results & Knowledge Gained",
+    missing:"Summarize what was learned — what hypotheses were confirmed or eliminated, even if the project didn't fully succeed. Knowledge gained is what SR&ED rewards.",
+    weak:"Add more on the technical conclusions reached and what your team now knows that wasn't known before." },
+  "f-summary_sheet": { label:"Project Summary Sheet",
+    missing:"Complete a Project Summary Sheet capturing uncertainty, investigation, what was tried/failed/succeeded, advancement, and hours/costs. It's the backbone of the T661 and easiest to write while the work is fresh." },
+  "f-staff_ready": { label:"Technical Staff Audit Readiness",
+    missing:"Assess whether your technical staff could explain the uncertainty to a CRA reviewer. Their plain-language account is a key audit defense.",
+    weak:"Coach technical staff to answer \"What didn't you know?\" and \"Why couldn't you look it up?\" before any CRA contact." },
+  "f-deadline": { label:"Filing Deadline Awareness",
+    missing:"Confirm your deadlines: 18 months after fiscal year-end for the federal T661, 21 months for the Alberta IEG. Missing them permanently forfeits the claim.",
+    risk:"You flagged possible deadline risk. Calculate your exact filing date from fiscal year-end now — these deadlines have no extensions." },
+  "f-t661": { label:"T661 Technical Description", critical:true,
+    missing:"Draft the T661 technical description (Boxes 242, 244, 246). You can generate a starting draft from the export panel below once Phases 1 and 4 are filled in.",
+    weak:"Move the T661 description toward a complete draft. Use the \"T661 Project Description\" export below as your starting structure." },
+  "f-sch31": { label:"Schedule 31 Expenditures",
+    missing:"Compile the SR&ED expenditure schedule (Schedule 31) and reconcile it to payroll and your GL. The \"Expenditure & IEG Summary\" export below gives you the structure.",
+    weak:"Finish reconciling costs to payroll and the general ledger — discrepancies between Schedule 31 and your books are an audit flag." },
+  "f-ieg": { label:"Alberta IEG",
+    missing:"Confirm whether you're claiming the Alberta Innovation Employment Grant. Combined with the federal ITC it can lift recovery to 40–55+ cents per dollar.",
+    weak:"If eligible in Alberta, plan to claim the IEG on AT1 Schedule 29 — first-time filers get the full 20% enhanced rate on all eligible spend." },
+  "f-docs_package": { label:"Supporting Documents Package",
+    missing:"Assemble the supporting documents package. CRA can request it up to 4 years after assessment — keep everything in organized, access-controlled cloud storage.",
+    weak:"Fill in the remaining pieces of the supporting documents package so a review request can be answered in hours, not weeks." }
+};
+
+// Evaluate a single field's completeness → returns null (ok) or {status, text}
+function evalField(f) {
+  const val = (getVal(f.id) || "").trim();
+  const info = FIELD_INFO[f.id] || { label: f.id };
+
+  if (f.type === "text" || f.type === "textarea") {
+    if (!val) return { status:"missing", text: info.missing || "Not yet provided." };
+    if (val.length <= 20 && info.weak) return { status:"weak", text: info.weak };
+    return null;
+  }
+  if (f.type === "check") {
+    const arr = val ? val.split("||").filter(Boolean) : [];
+    const bad = f.bad || [];
+    const goodItems = arr.filter(o => !bad.includes(o));
+    const riskyChosen = arr.some(o => bad.includes(o));
+    if (arr.length === 0) return { status:"missing", text: info.missing || "Nothing selected yet." };
+    if (riskyChosen && info.risk) return { status:"risk", text: info.risk };
+    if (goodItems.length < 2 && info.weak) return { status:"weak", text: info.weak };
+    return null;
+  }
+  if (f.type === "radio") {
+    if (!val) return { status:"missing", text: info.missing || "Not yet answered." };
+    const goods = f.good || [];
+    const isGood = goods.some(g => val.startsWith(g));
+    const isRisky = /No —|Not sure|Not started|Not aware|Unlikely|Need help|risk|reconstruct|only documented successes/i.test(val);
+    if (isGood) return null;
+    if (isRisky && info.risk) return { status:"risk", text: info.risk };
+    if (info.weak) return { status:"weak", text: info.weak };
+    return null;
+  }
+  return null;
+}
+
+let currentPhase = 1;
+let inSummary = false;
+
+function getVal(id) {
+  const el = document.getElementById(id);
+  return el ? el.value : "";
+}
+
+function scorePhase(phase) {
+  let earned = 0, possible = 0;
+  for (const f of phase.fields) {
+    possible += f.weight;
+    const val = getVal(f.id);
+    if (!val) continue;
+    if (f.type === "text" || f.type === "textarea") {
+      if (val.trim().length > 20) earned += f.weight;
+      else if (val.trim().length > 0) earned += f.weight * 0.4;
+    } else if (f.type === "check") {
+      const arr = val ? val.split("||").filter(Boolean) : [];
+      const bad = f.bad || [];
+      const good = arr.filter(o => !bad.includes(o));
+      if (good.length >= 3) earned += f.weight;
+      else if (good.length >= 1) earned += f.weight * 0.5;
+    } else if (f.type === "radio") {
+      const goods = f.good || [];
+      if (goods.some(g => val.startsWith(g))) earned += f.weight;
+      else if (!val.includes("No —") && !val.includes("Not sure") && !val.includes("Not started") && !val.includes("Not aware") && !val.includes("Unlikely") && !val.includes("Need help")) earned += f.weight * 0.5;
+    }
+  }
+  return possible > 0 ? Math.round((earned / possible) * 100) : 0;
+}
+
+function getScoreMeta(score) {
+  if (score >= 80) return { label:"Strong",       color:"#0B7B6B", bg:"#E6F6F0" };
+  if (score >= 55) return { label:"Developing",   color:"#8A6A00", bg:"#FFF8E0" };
+  if (score > 0)   return { label:"Needs Work",   color:"#8A1A1A", bg:"#FDECEA" };
+  return                  { label:"Not Started",  color:"#5A6A7A", bg:"#F0F4FA" };
+}
+
+function updateScore() {
+  let total = 0;
+  for (const p of PHASES) {
+    const s = scorePhase(p);
+    total += s;
+    const fill  = document.getElementById(`score-fill-${p.id}`);
+    const pill  = document.getElementById(`score-pill-${p.id}`);
+    const chip  = document.getElementById(`chip-${p.id}`);
+    const meta  = getScoreMeta(s);
+    if (fill) fill.style.width = s + "%";
+    if (pill) { pill.textContent = `${s}% — ${meta.label}`; pill.style.background = meta.bg; pill.style.color = meta.color; }
+    if (chip) {
+      if (s > 0) {
+        chip.style.display = "inline-block";
+        chip.textContent   = s + "%";
+        chip.style.background = meta.bg;
+        chip.style.color      = meta.color;
+      }
+    }
+  }
+  const overall = Math.round(total / PHASES.length);
+  const el = document.getElementById("overall-score-display");
+  if (el) el.textContent = overall + "%";
+}
+
+function showPhase(n) {
+  inSummary = false;
+  document.getElementById("summary-view").classList.remove("active");
+  document.querySelectorAll(".phase-content").forEach(el => el.classList.remove("active"));
+  document.querySelectorAll(".phase-btn").forEach(el => el.classList.remove("active"));
+  const target = document.getElementById(`phase-${n}`);
+  if (target) target.classList.add("active");
+  const btn = document.getElementById(`btn-${n}`);
+  if (btn) btn.classList.add("active");
+  document.getElementById("btn-summary").classList.remove("active");
+  currentPhase = n;
+  window.scrollTo(0, 0);
+  updateScore();
+}
+
+function showSummary() {
+  inSummary = true;
+  document.querySelectorAll(".phase-content").forEach(el => el.classList.remove("active"));
+  document.querySelectorAll(".phase-btn").forEach(el => el.classList.remove("active"));
+  document.getElementById("summary-view").classList.add("active");
+  document.getElementById("btn-summary").classList.add("active");
+  buildSummary();
+  window.scrollTo(0, 0);
+}
+
+function buildSummary() {
+  updateScore();
+  const scores = PHASES.map(p => ({ phase: p, score: scorePhase(p) }));
+  const overall = Math.round(scores.reduce((a, b) => a + b.score, 0) / PHASES.length);
+  const overallMeta = getScoreMeta(overall);
+
+  document.getElementById("sum-big-score").textContent = overall + "%";
+  document.getElementById("sum-big-label").textContent = overallMeta.label;
+  document.getElementById("sum-desc").innerHTML = overall >= 80
+    ? "<strong>Your project documentation is well-positioned for a T661 claim.</strong> Focus on completing any remaining gaps before filing. Early filing maximizes your refund processing speed."
+    : overall >= 55
+    ? "<strong>Your claim has a solid foundation, but documentation gaps create audit risk.</strong> Address the priority items below before filing. Most gaps can be closed in 2–4 weeks with the right system."
+    : "<strong>Significant documentation gaps exist.</strong> Building these records now — even for a future claim — will dramatically improve your eligibility and audit defense position.";
+
+  // Phase grid
+  const grid = document.getElementById("phase-grid");
+  grid.innerHTML = "";
+  for (const { phase, score } of scores) {
+    const meta = getScoreMeta(score);
+    grid.innerHTML += `
+      <div class="phase-card" style="border-top: 3px solid ${phase.color}">
+        <div class="phase-card-icon">${phase.icon}</div>
+        <div class="phase-card-name">${phase.name}</div>
+        <div class="phase-card-score" style="color:${meta.color}">${score}%</div>
+        <div class="phase-card-status" style="color:${meta.color}">${meta.label}</div>
+      </div>`;
+  }
+
+  // ── COMPLETION CHECKLIST: specific suggestions per incomplete field ──
+  const gapsEl = document.getElementById("gaps-section");
+
+  // Evaluate every field across all phases
+  const phaseGaps = [];
+  let totalIssues = 0;
+  for (const phase of PHASES) {
+    const issues = [];
+    for (const f of phase.fields) {
+      const res = evalField(f);
+      if (res) { issues.push({ f, res }); totalIssues++; }
+    }
+    if (issues.length) phaseGaps.push({ phase, issues });
+  }
+
+  if (totalIssues === 0) {
+    gapsEl.innerHTML = `<div class="all-complete">✅ <strong>Every section is complete.</strong> This project has all the information needed to build a T661 claim. Use the export panel below to generate your T661 project description and expenditure schedule.</div>`;
+  } else {
+    const statusMeta = {
+      missing: { chip:"Missing",    color:"#8A1A1A", bg:"#FDECEA", dot:"#B02828" },
+      weak:    { chip:"Needs more", color:"#8A5A00", bg:"#FFF6E0", dot:"#C47D00" },
+      risk:    { chip:"Audit risk", color:"#8A1A1A", bg:"#FDECEA", dot:"#B02828" }
+    };
+
+    gapsEl.innerHTML = `
+      <h3>📋 What's Needed to Complete This Claim</h3>
+      <p style="font-size:12.5px;color:var(--muted);margin:-4px 0 14px;">${totalIssues} item${totalIssues>1?"s":""} to address. Each note explains what's missing and how to strengthen it for your T661.</p>` +
+      phaseGaps.map(({ phase, issues }) => {
+        const score = scorePhase(phase);
+        const meta = getScoreMeta(score);
+        return `
+        <div class="gap-card">
+          <div class="gap-card-header">
+            <span>${phase.icon}</span>
+            <strong>${phase.name}: ${phase.label}</strong>
+            <span class="gap-chip" style="background:${meta.bg};color:${meta.color};">${score}%</span>
+          </div>
+          <div class="gap-items">
+            ${issues.map(({ f, res }) => {
+              const sm = statusMeta[res.status] || statusMeta.weak;
+              const info = FIELD_INFO[f.id] || {};
+              return `
+                <div class="gap-item">
+                  <div class="gap-item-head">
+                    <span class="gap-item-dot" style="background:${sm.dot};"></span>
+                    <span class="gap-item-label">${info.label || f.id}${info.critical ? ' <span class="gap-critical">Critical</span>' : ''}</span>
+                    <span class="gap-status-chip" style="background:${sm.bg};color:${sm.color};">${sm.chip}</span>
+                  </div>
+                  <div class="gap-item-text">${res.text}</div>
+                  <button class="gap-jump" onclick="showPhase(${phase.id})">Go to ${phase.name} →</button>
+                </div>`;
+            }).join("")}
+          </div>
+        </div>`;
+      }).join("");
+  }
+  return;
+}
+
+function toggleTip(btn) {
+  const box = btn.nextElementSibling;
+  box.classList.toggle("open");
+  btn.textContent = box.classList.contains("open")
+    ? btn.textContent.replace("▶","▼")
+    : btn.textContent.replace("▼","▶");
+}
+
+// Clicking a label anywhere except directly on its nested checkbox/radio makes the
+// browser fire a second, synthetic click that forwards to the control (the native
+// "activate associated control" default action). That second click also bubbles
+// through the label, so toggleCheck's onclick would run twice per gesture and its
+// classList.toggle() would cancel itself out. Suppress that forwarded click at the
+// source so every gesture reaches toggleCheck/selectRadio exactly once.
+// Only the static template items (with an inline onclick="toggleCheck/selectRadio(...)")
+// have this problem — "Other…" rows and dynamically-added custom items rely on that
+// same native forwarding to reach their own (single-fire-safe) checkbox listeners,
+// so they're deliberately left alone here.
+document.addEventListener("click", (e) => {
+  if (e.target.tagName === "INPUT") return;
+  const item = e.target.closest(".check-item, .radio-item");
+  if (item && item.hasAttribute("onclick")) e.preventDefault();
+});
+
+function toggleCheck(label, hiddenId, value) {
+  label.classList.toggle("selected");
+  const input = label.querySelector("input");
+  input.checked = label.classList.contains("selected");
+  const hidden = document.getElementById(hiddenId);
+  let arr = hidden.value ? hidden.value.split("||").filter(Boolean) : [];
+  if (label.classList.contains("selected")) { if (!arr.includes(value)) arr.push(value); }
+  else arr = arr.filter(v => v !== value);
+  hidden.value = arr.join("||");
+  updateScore();
+}
+
+function selectRadio(label, hiddenId, value) {
+  const parent = label.closest(".radio-grid");
+  parent.querySelectorAll(".radio-item").forEach(el => el.classList.remove("selected"));
+  label.classList.add("selected");
+  label.querySelector("input").checked = true;
+  document.getElementById(hiddenId).value = value;
+  updateScore();
+}
+
+function resetAll() {
+  document.querySelectorAll("input[type=text], textarea").forEach(el => el.value = "");
+  document.querySelectorAll("input[type=hidden]").forEach(el => el.value = "");  document.querySelectorAll(".radio-item").forEach(el => { el.classList.remove("selected"); el.querySelector("input").checked = false; });
+  document.querySelectorAll(".check-item").forEach(el => { el.classList.remove("selected"); if(el.querySelector("input[type=checkbox]")) el.querySelector("input[type=checkbox]").checked = false; });
+  document.querySelectorAll(".tip-box").forEach(el => el.classList.remove("open"));
+  // Clear all dynamically added custom items
+  document.querySelectorAll('[id^="custom-list-"]').forEach(el => el.innerHTML = "");
+  // Hide any open add-input rows and restore buttons
+  document.querySelectorAll('[id^="custom-input-row-"]').forEach(el => el.style.display = "none");
+  document.querySelectorAll('[id^="show-custom-btn-"]').forEach(el => el.style.display = "block");
+  // Reset Other items
+  document.querySelectorAll('.other-item').forEach(label => {
+    label.style.background  = '#F7FAFF';
+    label.style.borderColor = '#C8D8E8';
+    const span = label.querySelector('span');
+    const inp  = label.querySelector('input[type=text]');
+    if (span) span.style.display = '';
+    if (inp)  inp.style.display  = 'none';
+  });
+  updateScore();
+  showPhase(1);
+}
+
+// ── GENERIC "OTHER" INLINE CHECKBOX ──
+// When user checks "Other…", reveal the text input inside that same row.
+function otherTyping(fieldId) {
+  const cb   = document.getElementById('other-cb-' + fieldId);
+  const span = document.getElementById('other-span-' + fieldId);
+  const inp  = document.getElementById('other-input-' + fieldId);
+  const val  = inp.value.trim();
+  // auto-check when typing starts
+  if (val && !cb.checked) {
+    cb.checked = true;
+    document.getElementById('other-label-' + fieldId).style.background = '#EBF3FF';
+    document.getElementById('other-label-' + fieldId).style.borderColor = 'var(--blue)';
+  }
+  updateScore();
+}
+
+function otherCommit(fieldId) {
+  const cb    = document.getElementById('other-cb-' + fieldId);
+  const span  = document.getElementById('other-span-' + fieldId);
+  const inp   = document.getElementById('other-input-' + fieldId);
+  const label = document.getElementById('other-label-' + fieldId);
+  const val   = inp.value.trim();
+  if (val) {
+    cb.checked = true;
+    label.style.background   = '#EBF3FF';
+    label.style.borderColor  = 'var(--blue)';
+    // update hidden field: remove any previous "Other:…" entry, add new one
+    const hidden = document.getElementById(fieldId);
+    let arr = hidden.value ? hidden.value.split('||').filter(Boolean) : [];
+    arr = arr.filter(v => !v.startsWith('Other: '));
+    arr.push('Other: ' + val);
+    hidden.value = arr.join('||');
+  } else {
+    cb.checked = false;
+    label.style.background  = '#F7FAFF';
+    label.style.borderColor = '#C8D8E8';
+    // remove from hidden
+    const hidden = document.getElementById(fieldId);
+    let arr = hidden.value ? hidden.value.split('||').filter(Boolean) : [];
+    arr = arr.filter(v => !v.startsWith('Other: '));
+    hidden.value = arr.join('||');
+  }
+  updateScore();
+}
+
+// Wire up the "Other…" checkbox click — toggle the text input visibility
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.other-item').forEach(label => {
+    const cb   = label.querySelector('input[type=checkbox]');
+    const span = label.querySelector('span');
+    const inp  = label.querySelector('input[type=text]');
+    if (!cb || !inp) return;
+    const fieldId = inp.id.replace('other-input-', '');
+
+    cb.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (cb.checked) {
+        span.style.display = 'none';
+        inp.style.display  = 'block';
+        inp.focus();
+        label.style.background  = '#EBF3FF';
+        label.style.borderColor = 'var(--blue)';
+      } else {
+        span.style.display = '';
+        inp.style.display  = 'none';
+        inp.value = '';
+        label.style.background  = '#F7FAFF';
+        label.style.borderColor = '#C8D8E8';
+        // remove from hidden
+        const hidden = document.getElementById(fieldId);
+        let arr = hidden.value ? hidden.value.split('||').filter(Boolean) : [];
+        arr = arr.filter(v => !v.startsWith('Other: '));
+        hidden.value = arr.join('||');
+        updateScore();
+      }
+    });
+  });
+});
+
+// ── GENERIC "ADD ANOTHER CATEGORY" ──
+function showCustomInput(fieldId) {
+  document.getElementById('show-custom-btn-' + fieldId).style.display = 'none';
+  const row = document.getElementById('custom-input-row-' + fieldId);
+  row.style.display = 'flex';
+  document.getElementById('custom-text-' + fieldId).focus();
+}
+
+function cancelCustomItem(fieldId) {
+  document.getElementById('custom-input-row-' + fieldId).style.display = 'none';
+  document.getElementById('custom-text-' + fieldId).value = '';
+  document.getElementById('show-custom-btn-' + fieldId).style.display = 'block';
+}
+
+// Builds the DOM for one custom (user-added) checkbox item.
+// addToHiddenFlag=false is used during session restore, where the hidden field is already set directly.
+function createCustomItemDOM(fieldId, val, addToHiddenFlag) {
+  const list  = document.getElementById('custom-list-' + fieldId);
+  const safeVal = val.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+
+  const label = document.createElement('label');
+  label.className = 'check-item selected';
+  label.style.cssText = 'display:flex; align-items:flex-start; gap:11px; padding:10px 14px; border-radius:9px; border:1.5px solid var(--blue); background:#EBF3FF; transition:all 0.15s;';
+  label.innerHTML = `
+    <input type="checkbox" checked style="margin-top:2px; accent-color:var(--blue); flex-shrink:0;"/>
+    <span style="font-size:13px; color:var(--text); line-height:1.5; flex:1;">${val}</span>
+    <button onclick="removeCustomItem(this,'${fieldId}','${safeVal}')" title="Remove"
+      style="background:none; border:none; color:var(--muted); cursor:pointer; font-size:15px; padding:0 2px; line-height:1; flex-shrink:0;"
+      onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--muted)'">✕</button>`;
+
+  const cb = label.querySelector('input[type=checkbox]');
+  cb.addEventListener('change', () => {
+    if (cb.checked) {
+      label.style.background  = '#EBF3FF';
+      label.style.borderColor = 'var(--blue)';
+      addToHidden(fieldId, val);
+    } else {
+      label.style.background  = '#FAFCFF';
+      label.style.borderColor = 'var(--border)';
+      removeFromHidden(fieldId, val);
+    }
+    updateScore();
+  });
+
+  list.appendChild(label);
+  if (addToHiddenFlag) addToHidden(fieldId, val);
+  return label;
+}
+
+function addCustomItem(fieldId) {
+  const input = document.getElementById('custom-text-' + fieldId);
+  const val   = input.value.trim();
+  if (!val) return;
+
+  createCustomItemDOM(fieldId, val, true);
+  updateScore();
+
+  input.value = '';
+  document.getElementById('custom-input-row-' + fieldId).style.display = 'none';
+  document.getElementById('show-custom-btn-' + fieldId).style.display  = 'block';
+}
+
+function removeCustomItem(btn, fieldId, val) {
+  btn.closest('label').remove();
+  removeFromHidden(fieldId, val);
+  updateScore();
+}
+
+function addToHidden(id, val) {
+  const hidden = document.getElementById(id);
+  const arr = hidden.value ? hidden.value.split('||').filter(Boolean) : [];
+  if (!arr.includes(val)) arr.push(val);
+  hidden.value = arr.join('||');
+}
+
+function removeFromHidden(id, val) {
+  const hidden = document.getElementById(id);
+  const arr = hidden.value ? hidden.value.split('||').filter(Boolean) : [];
+  hidden.value = arr.filter(v => v !== val).join('||');
+}
+
+// ── LEGACY: who_involved still uses named functions (kept for compatibility) ──
+function showCustomWhoInput()  { showCustomInput('f-who_involved'); }
+function cancelCustomWho()     { cancelCustomItem('f-who_involved'); }
+function addCustomWho()        { addCustomItem('f-who_involved'); }
+function removeCustomWho(btn, val) { removeCustomItem(btn, 'f-who_involved', val); }
+
+// ══════════════════════════════════════════════════════════
+//  EXPORT / DOWNLOAD FUNCTIONS
+// ══════════════════════════════════════════════════════════
+
+const PRACTICE = {
+  name: "Impact Hydrogen Solutions",
+  tagline: "SR&ED Consulting &amp; Innovation Cost Recovery",
+  services: [
+    "Fuel Cost Reduction",
+    "Invoice Acceleration &amp; Cashflow (DSO Reduction)",
+    "SR&ED Tax Credit Recovery"
+  ]
+};
+
+// Helpers to read values safely
+function v(id) { const el = document.getElementById(id); return el ? (el.value || "").trim() : ""; }
+function notes(id) { return v("notes-" + id); }
+function checkList(id) {
+  const raw = v(id);
+  if (!raw) return [];
+  return raw.split("||").filter(Boolean);
+}
+function esc(s) {
+  return (s || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+function todayStr() {
+  return new Date().toLocaleDateString("en-CA", { year:"numeric", month:"long", day:"numeric" });
+}
+function fmtMoney(raw) {
+  if (!raw) return null;
+  const num = parseFloat(String(raw).replace(/[^0-9.]/g, ""));
+  if (isNaN(num)) return null;
+  return num;
+}
+function money(n) {
+  return "$" + n.toLocaleString("en-CA", { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+}
+
+// Shared document shell + print styles
+function docShell(title, bodyHtml, accent) {
+  accent = accent || "#1456A0";
+  return `<!DOCTYPE html><html><head><meta charset="utf-8"/>
+<title>${title}</title>
+<style>
+  @page { size: letter; margin: 0.9in; }
+  * { box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; color: #1A2A3A; line-height: 1.6; margin: 0; padding: 24px; max-width: 850px; margin: 0 auto; }
+  .doc-header { border-bottom: 3px solid ${accent}; padding-bottom: 16px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-start; }
+  .doc-brand { font-size: 18px; font-weight: 800; color: ${accent}; }
+  .doc-brand-sub { font-size: 11px; color: #5A6A7A; margin-top: 2px; }
+  .doc-services { font-size: 10px; color: #7A8A9A; margin-top: 6px; }
+  .doc-meta { text-align: right; font-size: 11px; color: #5A6A7A; }
+  .doc-title { font-size: 24px; font-weight: 800; color: #1A2A3A; margin: 0 0 4px; }
+  .doc-subtitle { font-size: 13px; color: #5A6A7A; margin-bottom: 24px; }
+  h2 { font-size: 15px; font-weight: 700; color: ${accent}; margin: 24px 0 8px; padding-bottom: 5px; border-bottom: 1px solid #E0E7EF; }
+  h3 { font-size: 13px; font-weight: 700; color: #1A2A3A; margin: 16px 0 4px; }
+  p { font-size: 12.5px; margin: 0 0 10px; }
+  .box-label { display: inline-block; background: ${accent}; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-right: 8px; letter-spacing: 0.5px; }
+  .field-block { margin-bottom: 18px; padding: 14px 16px; background: #F7FAFC; border-left: 3px solid ${accent}; border-radius: 0 6px 6px 0; }
+  .field-block .fb-title { font-size: 12px; font-weight: 700; color: #1A2A3A; margin-bottom: 6px; }
+  .field-block .fb-content { font-size: 12.5px; color: #2A3A4A; white-space: pre-wrap; }
+  .empty { color: #A0AABB; font-style: italic; }
+  ul { margin: 4px 0 10px; padding-left: 22px; }
+  li { font-size: 12.5px; margin-bottom: 3px; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 12px; }
+  th { background: ${accent}; color: #fff; text-align: left; padding: 8px 10px; font-weight: 600; }
+  td { padding: 8px 10px; border-bottom: 1px solid #E0E7EF; }
+  tr:nth-child(even) td { background: #F7FAFC; }
+  .total-row td { font-weight: 800; background: #EBF2FF !important; border-top: 2px solid ${accent}; }
+  .note-box { margin: 16px 0; padding: 12px 14px; background: #FFF8E6; border-left: 3px solid #C47D00; border-radius: 0 6px 6px 0; font-size: 11.5px; color: #5A4A2A; }
+  .disclaimer { margin-top: 30px; padding-top: 14px; border-top: 1px solid #E0E7EF; font-size: 10px; color: #8A9AAB; line-height: 1.5; }
+  .score-badge { display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+  .print-bar { position: fixed; top: 0; left: 0; right: 0; background: ${accent}; color: #fff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 999; }
+  .print-bar button { background: #fff; color: ${accent}; border: none; padding: 8px 20px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; }
+  .print-bar .pb-msg { font-size: 13px; }
+  @media print { .print-bar { display: none; } body { padding-top: 24px; } }
+  body { padding-top: 70px; }
+</style></head>
+<body>
+<div class="print-bar">
+  <span class="pb-msg">📄 Your document is ready. Click "Save as PDF" (or Print → Save as PDF) to download.</span>
+  <button onclick="window.print()">Save as PDF ↓</button>
+</div>
+<div class="doc-header">
+  <div>
+    <div class="doc-brand">${PRACTICE.name}</div>
+    <div class="doc-brand-sub">${PRACTICE.tagline}</div>
+    <div class="doc-services">Services: ${PRACTICE.services.join(" &nbsp;·&nbsp; ")}</div>
+  </div>
+  <div class="doc-meta">
+    Generated: ${todayStr()}<br/>
+    Confidential — Client Working Document
+  </div>
+</div>
+${bodyHtml}
+<div class="disclaimer">
+  This document was generated by the SR&ED Project Eligibility Guide as a preparation aid. It is not an official CRA or Alberta Tax and Revenue Administration form and does not constitute filed tax documentation. Official SR&ED claims (Form T661, Schedule 31) and Alberta Innovation Employment Grant claims (AT1 Schedule 29) must be filed electronically through certified tax software as part of the T2 corporate income tax return. Figures shown are estimates for planning purposes only and should be verified by a qualified SR&ED practitioner or accountant before filing. ${PRACTICE.name} — ${todayStr()}.
+</div>
+</body></html>`;
+}
+
+function openDoc(html) {
+  const w = window.open("", "_blank");
+  if (!w) { alert("Please allow pop-ups for this site to download your document."); return; }
+  w.document.open();
+  w.document.write(html);
+  w.document.close();
+}
+
+// Word's HTML renderer doesn't support flexbox or fixed positioning like a browser does,
+// so this mirrors docShell's markup/classes (so the same `body` string works in both)
+// but lays out the header with a table and drops the print bar.
+function docShellWord(title, bodyHtml, accent) {
+  accent = accent || "#1456A0";
+  return `<!DOCTYPE html><html><head><meta charset="utf-8"/>
+<title>${esc(title)}</title>
+<style>
+  body { font-family: Calibri, Arial, sans-serif; color: #1A2A3A; line-height: 1.6; }
+  .doc-header-table { width: 100%; border-bottom: 3px solid ${accent}; padding-bottom: 16px; margin-bottom: 24px; }
+  .doc-header-table td { vertical-align: top; border: none; padding: 0; }
+  .doc-brand { font-size: 18px; font-weight: bold; color: ${accent}; }
+  .doc-brand-sub { font-size: 11px; color: #5A6A7A; margin-top: 2px; }
+  .doc-services { font-size: 10px; color: #7A8A9A; margin-top: 6px; }
+  .doc-meta { text-align: right; font-size: 11px; color: #5A6A7A; }
+  .doc-title { font-size: 24px; font-weight: bold; color: #1A2A3A; margin: 0 0 4px; }
+  .doc-subtitle { font-size: 13px; color: #5A6A7A; margin-bottom: 24px; }
+  h2 { font-size: 15px; font-weight: bold; color: ${accent}; margin: 24px 0 8px; padding-bottom: 5px; border-bottom: 1px solid #E0E7EF; }
+  h3 { font-size: 13px; font-weight: bold; color: #1A2A3A; margin: 16px 0 4px; }
+  p { font-size: 12.5px; margin: 0 0 10px; }
+  .box-label { background: ${accent}; color: #fff; font-size: 10px; font-weight: bold; padding: 2px 8px; margin-right: 8px; }
+  .field-block { margin-bottom: 18px; padding: 14px 16px; background: #F7FAFC; border-left: 3px solid ${accent}; }
+  .field-block .fb-title { font-size: 12px; font-weight: bold; color: #1A2A3A; margin-bottom: 6px; }
+  .field-block .fb-content { font-size: 12.5px; color: #2A3A4A; white-space: pre-wrap; }
+  .empty { color: #A0AABB; font-style: italic; }
+  ul { margin: 4px 0 10px; padding-left: 22px; }
+  li { font-size: 12.5px; margin-bottom: 3px; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 12px; }
+  th { background: ${accent}; color: #fff; text-align: left; padding: 8px 10px; font-weight: bold; }
+  td { padding: 8px 10px; border-bottom: 1px solid #E0E7EF; }
+  .total-row td { font-weight: bold; background: #EBF2FF; border-top: 2px solid ${accent}; }
+  .note-box { margin: 16px 0; padding: 12px 14px; background: #FFF8E6; border-left: 3px solid #C47D00; font-size: 11.5px; color: #5A4A2A; }
+  .disclaimer { margin-top: 30px; padding-top: 14px; border-top: 1px solid #E0E7EF; font-size: 10px; color: #8A9AAB; line-height: 1.5; }
+  .score-badge { font-size: 12px; font-weight: bold; padding: 3px 12px; }
+</style></head>
+<body>
+<table class="doc-header-table"><tr>
+  <td>
+    <div class="doc-brand">${PRACTICE.name}</div>
+    <div class="doc-brand-sub">${PRACTICE.tagline}</div>
+    <div class="doc-services">Services: ${PRACTICE.services.join(" &nbsp;·&nbsp; ")}</div>
+  </td>
+  <td class="doc-meta">
+    Generated: ${todayStr()}<br/>
+    Confidential — Client Working Document
+  </td>
+</tr></table>
+${bodyHtml}
+<div class="disclaimer">
+  This document was generated by the SR&ED Project Eligibility Guide as a preparation aid. It is not an official CRA or Alberta Tax and Revenue Administration form and does not constitute filed tax documentation. Official SR&ED claims (Form T661, Schedule 31) and Alberta Innovation Employment Grant claims (AT1 Schedule 29) must be filed electronically through certified tax software as part of the T2 corporate income tax return. Figures shown are estimates for planning purposes only and should be verified by a qualified SR&ED practitioner or accountant before filing. ${PRACTICE.name} — ${todayStr()}.
+</div>
+</body></html>`;
+}
+
+function downloadWordDoc(title, bodyHtml, accent) {
+  if (typeof htmlDocx === "undefined" || !htmlDocx.asBlob) {
+    alert('Word export is still loading (or blocked by your connection) — please wait a moment and try again, or use the "PDF Preview" option instead.');
+    return;
+  }
+  const fullHtml = docShellWord(title, bodyHtml, accent);
+  const blob = htmlDocx.asBlob(fullHtml);
+
+  const projName = v("f-project_name") || "SRED_Project";
+  const slug = projName.replace(/[^a-z0-9]+/gi, "_").replace(/^_+|_+$/g, "") || "SRED_Project";
+  const titleSlug = title.replace(/[^a-z0-9]+/gi, "_").replace(/^_+|_+$/g, "");
+  const filename = `${titleSlug}_${slug}.docx`;
+
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast(`Downloaded ${filename}`);
+}
+
+function fieldBlock(title, content) {
+  const isEmpty = !content || !content.trim();
+  return `<div class="field-block">
+    <div class="fb-title">${title}</div>
+    <div class="fb-content${isEmpty ? " empty" : ""}">${isEmpty ? "— Not yet provided —" : esc(content)}</div>
+  </div>`;
+}
+
+// ── 1. READINESS REPORT ──
+function buildReportDoc() {
+  const scores = PHASES.map(p => ({ phase: p, score: scorePhase(p) }));
+  const overall = Math.round(scores.reduce((a, b) => a + b.score, 0) / PHASES.length);
+  const oMeta = getScoreMeta(overall);
+  const projName = v("f-project_name") || "Untitled SR&ED Project";
+
+  let phaseRows = scores.map(({ phase, score }) => {
+    const m = getScoreMeta(score);
+    return `<tr><td>${phase.icon} ${phase.name}: ${phase.label}</td>
+      <td style="text-align:right;"><span class="score-badge" style="background:${m.bg};color:${m.color};">${score}% — ${m.label}</span></td></tr>`;
+  }).join("");
+
+  // Gaps — use the same per-field suggestion engine as the on-screen summary
+  let gapsHtml = "";
+  let anyIssues = false;
+  const gapBlocks = PHASES.map(phase => {
+    const issues = [];
+    for (const f of phase.fields) {
+      const res = evalField(f);
+      if (res) issues.push({ f, res });
+    }
+    if (!issues.length) return "";
+    anyIssues = true;
+    const items = issues.map(({ f, res }) => {
+      const info = FIELD_INFO[f.id] || {};
+      const tag = res.status === "missing" ? "Missing" : res.status === "risk" ? "Audit risk" : "Needs more";
+      return `<div style="margin-bottom:10px;">
+        <strong style="font-size:12px;">${info.label || f.id}</strong>
+        <span style="font-size:10px;font-weight:700;color:#B02828;">&nbsp;[${tag}]</span>
+        <div style="font-size:11.5px;color:#5A6A7A;margin-top:2px;">${esc(res.text)}</div>
+      </div>`;
+    }).join("");
+    return `<h3>${phase.icon} ${phase.name}: ${phase.label} — ${scorePhase(phase)}%</h3>${items}`;
+  }).join("");
+
+  if (!anyIssues) {
+    gapsHtml = `<p>✅ Every section is complete. This project has all the information needed to build a T661 claim.</p>`;
+  } else {
+    gapsHtml = gapBlocks;
+  }
+
+  const body = `
+    <div class="doc-title">SR&ED Readiness Report</div>
+    <div class="doc-subtitle">Project: <strong>${esc(projName)}</strong>${v("f-fiscal_year") ? " &nbsp;·&nbsp; Fiscal Year: " + esc(v("f-fiscal_year")) : ""}</div>
+
+    <h2>Overall Readiness</h2>
+    <p style="font-size:32px;font-weight:800;color:${oMeta.color};margin:8px 0;">${overall}% <span style="font-size:16px;">— ${oMeta.label}</span></p>
+    <p>${overall >= 80 ? "This project's documentation is well-positioned for a T661 claim. Focus on completing any remaining gaps before filing." : overall >= 55 ? "This claim has a solid foundation, but documentation gaps create audit risk. Address the priority items below before filing." : "Significant documentation gaps exist. Building these records now — even for a future claim — will dramatically improve eligibility and audit defense."}</p>
+
+    <h2>Phase Scores</h2>
+    <table><tr><th>Phase</th><th style="text-align:right;">Score</th></tr>${phaseRows}</table>
+
+    <h2>What's Needed to Complete This Claim</h2>
+    ${gapsHtml}
+
+    <h2>Project Summary</h2>
+    ${fieldBlock("Technological Uncertainty", v("f-tech_uncertainty"))}
+    ${fieldBlock("Technological Advancement Sought", v("f-tech_advancement"))}
+    ${fieldBlock("Systematic Investigation", v("f-systematic_inv"))}
+    ${fieldBlock("Results & Knowledge Gained", v("f-results"))}
+  `;
+  return { title: "SR&ED Readiness Report", body, accent: "#1456A0" };
+}
+function exportReport() {
+  const d = buildReportDoc();
+  openDoc(docShell(d.title, d.body, d.accent));
+}
+function exportReportWord() {
+  const d = buildReportDoc();
+  downloadWordDoc(d.title, d.body, d.accent);
+}
+
+// ── 2. T661 PROJECT DESCRIPTION ──
+function buildT661Doc() {
+  const projName = v("f-project_name") || "Untitled SR&ED Project";
+  const who = checkList("f-who_involved");
+  const whoHtml = who.length ? "<ul>" + who.map(w => `<li>${esc(w)}</li>`).join("") + "</ul>" : "<p class='empty'>— Not specified —</p>";
+
+  const body = `
+    <div class="doc-title">T661 Project Description — Preparation Draft</div>
+    <div class="doc-subtitle">Line 200 Project: <strong>${esc(projName)}</strong>${v("f-fiscal_year") ? " &nbsp;·&nbsp; Tax Year: " + esc(v("f-fiscal_year")) : ""}</div>
+
+    <div class="note-box">
+      This draft maps your responses to the three required technical narrative sections of Form T661 (Part 2). Copy each section into your certified tax software or provide to your accountant. CRA expects each answer to be specific and technical — review for completeness before filing.
+    </div>
+
+    <h2><span class="box-label">Line 240</span> Project Title</h2>
+    <p>${esc(projName)}</p>
+
+    <h2><span class="box-label">Box 242</span> What scientific or technological uncertainties did you attempt to overcome?</h2>
+    <div class="field-block"><div class="fb-content${!v("f-tech_uncertainty") ? " empty" : ""}">${v("f-tech_uncertainty") ? esc(v("f-tech_uncertainty")) : "— Not yet provided. This is the single most important section of the T661. Describe what was technologically unknown and could not be resolved through standard practice or publicly available knowledge. —"}</div></div>
+
+    <h2><span class="box-label">Box 244</span> What work did you perform in the tax year to overcome the uncertainties? (Systematic Investigation)</h2>
+    <div class="field-block"><div class="fb-content${!v("f-systematic_inv") ? " empty" : ""}">${v("f-systematic_inv") ? esc(v("f-systematic_inv")) : "— Not yet provided. Describe the systematic investigation: the hypotheses formed, experiments or analyses conducted, and how results informed subsequent work. —"}</div></div>
+
+    ${v("f-results") ? `<h3>Results & Observations</h3><div class="field-block"><div class="fb-content">${esc(v("f-results"))}</div></div>` : ""}
+
+    <h2><span class="box-label">Box 246</span> What technological advancements did you achieve or attempt to achieve?</h2>
+    <div class="field-block"><div class="fb-content${!v("f-tech_advancement") ? " empty" : ""}">${v("f-tech_advancement") ? esc(v("f-tech_advancement")) : "— Not yet provided. Describe the advancement in the underlying technology base — the new knowledge or capability generated, whether or not the project fully succeeded. —"}</div></div>
+
+    <h2>Personnel Who Performed the Work</h2>
+    ${whoHtml}
+    ${notes("f-who_involved") ? `<p style="font-size:12px;color:#5A6A7A;"><strong>Notes:</strong> ${esc(notes("f-who_involved"))}</p>` : ""}
+
+    <div class="note-box">
+      <strong>Supporting evidence on file:</strong> ${checkList("f-test_logs").length ? esc(checkList("f-test_logs").join("; ")) : "No test documentation recorded yet — CRA expects contemporaneous supporting evidence."}
+    </div>
+  `;
+  return { title: "T661 Project Description Draft", body, accent: "#C47D00" };
+}
+function exportT661() {
+  const d = buildT661Doc();
+  openDoc(docShell(d.title, d.body, d.accent));
+}
+function exportT661Word() {
+  const d = buildT661Doc();
+  downloadWordDoc(d.title, d.body, d.accent);
+}
+
+// ── 3. EXPENDITURE & IEG SUMMARY ──
+function buildExpenditureDoc() {
+  const projName = v("f-project_name") || "Untitled SR&ED Project";
+  const contractorRaw = fmtMoney(v("f-contractor_costs"));
+  const proxySelected = v("f-proxy_method").startsWith("Proxy Method");
+
+  // Since the tool doesn't capture exact salary $ yet, we present a structured schedule
+  // with placeholders where dollar figures are needed, and compute IEG illustration if contractor known.
+  const labourStatus = v("f-labour_tracked") || "Not specified";
+  const materialsList = checkList("f-materials_tracked");
+
+  // Build cost schedule table
+  const contractorEligible = contractorRaw ? contractorRaw * 0.8 : null;
+
+  let scheduleRows = `
+    <tr><td>SR&ED Salaries &amp; Wages</td><td>${esc(labourStatus)}</td><td style="text-align:right;">${labourStatus.startsWith("Yes") ? "To be entered from payroll" : "<span style='color:#B02828;'>Needs reconstruction</span>"}</td></tr>
+    <tr><td>Materials Consumed / Transformed</td><td>${materialsList.length ? esc(materialsList.slice(0,2).join("; ")) : "None recorded"}</td><td style="text-align:right;">To be entered from POs/invoices</td></tr>
+    <tr><td>Arm's-Length Contractor Costs (80% eligible)</td><td>${contractorRaw ? money(contractorRaw) + " total" : "Not specified"}</td><td style="text-align:right;">${contractorEligible !== null ? money(contractorEligible) : "—"}</td></tr>
+    <tr><td>Overhead — ${proxySelected ? "Proxy Method (55% of salaries)" : v("f-proxy_method") ? esc(v("f-proxy_method").split(" —")[0]) : "Method not selected"}</td><td>${proxySelected ? "Auto-calculated" : "—"}</td><td style="text-align:right;">${proxySelected ? "55% × eligible salaries" : "—"}</td></tr>
+  `;
+
+  // IEG illustration
+  const iegAwareness = v("f-ieg");
+  let iegBlock = `
+    <h2>Alberta Innovation Employment Grant (IEG) — AT1 Schedule 29</h2>
+    <p>Status: <strong>${iegAwareness ? esc(iegAwareness) : "Not specified"}</strong></p>
+    <table>
+      <tr><th>IEG Component</th><th>Rate</th><th>Applies To</th></tr>
+      <tr><td>Base grant</td><td>8%</td><td>Eligible R&amp;D expenditures in Alberta</td></tr>
+      <tr><td>Enhanced (incremental) grant</td><td>20%</td><td>Spending above prior 2-year average base</td></tr>
+    </table>
+    <div class="note-box">
+      <strong>First-time filer advantage:</strong> If this is a first claim, the prior 2-year R&D base is $0 — meaning all eligible spending qualifies for the 20% enhanced rate. Note that the IEG counts as provincial government assistance and reduces the federal ITC base; the two must be modeled together for an accurate net recovery figure.
+    </div>
+  `;
+
+  // Federal ITC illustration
+  const body = `
+    <div class="doc-title">SR&ED Expenditure &amp; IEG Summary</div>
+    <div class="doc-subtitle">Project: <strong>${esc(projName)}</strong>${v("f-fiscal_year") ? " &nbsp;·&nbsp; Fiscal Year: " + esc(v("f-fiscal_year")) : ""}</div>
+
+    <div class="note-box">
+      This schedule organizes your SR&ED costs into the structure of federal <strong>Schedule 31</strong> and Alberta <strong>AT1 Schedule 29</strong>. Dollar figures marked "to be entered" require your payroll and accounting records — enter these amounts to finalize your eligible expenditure pool.
+    </div>
+
+    <h2>Federal SR&ED Expenditure Pool — Schedule 31 Structure</h2>
+    <table>
+      <tr><th>Expenditure Category</th><th>Tracking Status</th><th style="text-align:right;">Eligible Amount</th></tr>
+      ${scheduleRows}
+    </table>
+
+    <h3>Federal Investment Tax Credit (ITC)</h3>
+    <p>For a Canadian-Controlled Private Corporation (CCPC), qualifying SR&ED expenditures earn a <strong>35% refundable ITC</strong> up to the expenditure limit. ${contractorEligible !== null ? "Based on the contractor figure entered, arm's-length contractor costs contribute <strong>" + money(contractorEligible) + "</strong> to the eligible base (before salaries, materials, and overhead)." : "Enter salary, material, and contractor figures to calculate your estimated ITC."}</p>
+
+    ${iegBlock}
+
+    <h2>Cost Capture Notes</h2>
+    ${notes("f-materials_tracked") ? fieldBlock("Materials Notes", notes("f-materials_tracked")) : ""}
+    ${notes("f-contractor_docs") ? fieldBlock("Contractor Notes", notes("f-contractor_docs")) : ""}
+    ${(!notes("f-materials_tracked") && !notes("f-contractor_docs")) ? "<p class='empty'>No additional cost notes recorded.</p>" : ""}
+
+    <h2>Combined Recovery Potential</h2>
+    <p>Companies filing both the federal ITC and Alberta IEG can typically recover <strong>40–55+ cents per eligible dollar</strong> of SR&ED spend, depending on CCPC status, the incremental IEG position, and expenditure mix. A precise figure requires finalized salary, material, and contractor amounts.</p>
+  `;
+  return { title: "SR&ED Expenditure & IEG Summary", body, accent: "#0B7B6B" };
+}
+function exportExpenditure() {
+  const d = buildExpenditureDoc();
+  openDoc(docShell(d.title, d.body, d.accent));
+}
+function exportExpenditureWord() {
+  const d = buildExpenditureDoc();
+  downloadWordDoc(d.title, d.body, d.accent);
+}
+
+// Shared field label map for gap reporting
+function fieldLabelMap() {
+  return {
+    "f-project_name":"Project Name","f-tech_uncertainty":"Technological Uncertainty","f-tech_advancement":"Technological Advancement",
+    "f-who_involved":"Who Performed the Work","f-fiscal_year":"Fiscal Year",
+    "f-time_tracking":"Time Tracking Method","f-test_logs":"Test Documentation","f-failures_documented":"Failure Documentation","f-contractor_docs":"Contractor Docs",
+    "f-labour_tracked":"Labour Cost Tracking","f-materials_tracked":"Materials Tracking","f-proxy_method":"Overhead Method","f-contractor_costs":"Contractor Costs","f-cost_accum":"Cost Accumulation",
+    "f-systematic_inv":"Systematic Investigation Description","f-results":"Results & Knowledge Gained","f-summary_sheet":"Project Summary Sheet","f-staff_ready":"Technical Staff Readiness",
+    "f-deadline":"Filing Deadline Awareness","f-t661":"T661 Description","f-sch31":"Schedule 31","f-ieg":"Alberta IEG","f-docs_package":"Supporting Documents"
+  };
+}
+
+// ══════════════════════════════════════════════════════════
+//  SAVE / LOAD PROGRESS (client-side, no backend)
+// ══════════════════════════════════════════════════════════
+
+const FIELD_TYPE_MAP = {};
+PHASES.forEach(p => p.fields.forEach(f => { FIELD_TYPE_MAP[f.id] = f.type; }));
+
+function showToast(msg) {
+  let toast = document.getElementById('app-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'app-toast';
+    toast.className = 'app-toast';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toast._hideTimer);
+  toast._hideTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+}
+
+function collectAllData() {
+  const data = {};
+  document.querySelectorAll('input[id^="f-"], textarea[id^="f-"]').forEach(el => { data[el.id] = el.value; });
+  document.querySelectorAll('textarea[id^="notes-"]').forEach(el => { data[el.id] = el.value; });
+  return data;
+}
+
+function saveProgress() {
+  const data = collectAllData();
+  const payload = { schema: "sred-dashboard-v1", savedAt: new Date().toISOString(), data };
+
+  const projName = v("f-project_name") || "SRED_Project";
+  const slug = projName.replace(/[^a-z0-9]+/gi, "_").replace(/^_+|_+$/g, "") || "SRED_Project";
+  const now = new Date();
+  const pad = n => String(n).padStart(2, "0");
+  const dateStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+  const filename = `${slug}_${dateStr}.json`;
+
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast(`Saved as ${filename}`);
+}
+
+// Sync a checklist hidden field + its static checkboxes, "Other…" row, and custom items to match `arr`.
+function setCheckFieldState(fieldId, arr) {
+  const hidden = document.getElementById(fieldId);
+  if (!hidden) return;
+  hidden.value = arr.join("||");
+
+  const staticItems = document.querySelectorAll(`.check-item[onclick*="toggleCheck(this,'${fieldId}',"]`);
+  const staticTexts = [];
+  staticItems.forEach(label => {
+    const span = label.querySelector("span");
+    const cb   = label.querySelector('input[type=checkbox]');
+    const text = span.textContent.trim();
+    staticTexts.push(text);
+    const match = arr.some(val => text.includes(val));
+    label.classList.toggle("selected", match);
+    cb.checked = match;
+  });
+
+  const otherLabel = document.getElementById("other-label-" + fieldId);
+  if (otherLabel) {
+    const otherCb   = document.getElementById("other-cb-" + fieldId);
+    const otherSpan = document.getElementById("other-span-" + fieldId);
+    const otherInp  = document.getElementById("other-input-" + fieldId);
+    const otherVal  = arr.find(val => val.startsWith("Other: "));
+    if (otherVal) {
+      otherCb.checked = true;
+      otherInp.value = otherVal.slice("Other: ".length);
+      otherSpan.style.display = "none";
+      otherInp.style.display  = "block";
+      otherLabel.style.background  = "#EBF3FF";
+      otherLabel.style.borderColor = "var(--blue)";
+    } else {
+      otherCb.checked = false;
+      otherInp.value = "";
+      otherSpan.style.display = "";
+      otherInp.style.display  = "none";
+      otherLabel.style.background  = "#F7FAFF";
+      otherLabel.style.borderColor = "#C8D8E8";
+    }
+  }
+
+  const list = document.getElementById("custom-list-" + fieldId);
+  if (list) {
+    list.innerHTML = "";
+    const customVals = arr.filter(val => !val.startsWith("Other: ") && !staticTexts.some(t => t.includes(val)));
+    customVals.forEach(val => createCustomItemDOM(fieldId, val, false));
+  }
+}
+
+// Sync a radio hidden field + its static radio items to match `val`.
+function setRadioFieldState(fieldId, val) {
+  const hidden = document.getElementById(fieldId);
+  if (!hidden) return;
+  hidden.value = val || "";
+
+  const items = document.querySelectorAll(`.radio-item[onclick*="selectRadio(this,'${fieldId}',"]`);
+  items.forEach(label => {
+    const span = label.querySelector("span");
+    const cb   = label.querySelector('input[type=radio]');
+    const text = span.textContent.trim();
+    const match = !!val && text.includes(val);
+    label.classList.toggle("selected", match);
+    cb.checked = match;
+  });
+}
+
+function loadProgressData(data) {
+  Object.entries(data).forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (el.tagName === "TEXTAREA" || (el.tagName === "INPUT" && el.type === "text")) {
+      el.value = val || "";
+    } else if (el.tagName === "INPUT" && el.type === "hidden") {
+      const type = FIELD_TYPE_MAP[id];
+      if (type === "check") setCheckFieldState(id, val ? val.split("||").filter(Boolean) : []);
+      else if (type === "radio") setRadioFieldState(id, val || "");
+      else el.value = val || "";
+    }
+  });
+  updateScore();
+  if (inSummary) buildSummary();
+}
+
+function handleLoadFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      const data = parsed && parsed.data ? parsed.data : parsed;
+      loadProgressData(data);
+      showToast("Progress loaded");
+    } catch (err) {
+      alert("This file could not be read as a saved SR&ED session (invalid JSON).");
+    }
+    event.target.value = "";
+  };
+  reader.readAsText(file);
+}
+
+// init
+updateScore();
+</script>
+</body>
+</html>
