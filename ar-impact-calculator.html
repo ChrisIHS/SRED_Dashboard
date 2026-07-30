@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AR Process Impact Calculator — Enter My Invoice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#14171A;
+    --surface:#1B1F23;
+    --surface-2:#21262B;
+    --border:#2B3136;
+    --border-soft:#242A2F;
+    --copper:#D9822B;
+    --copper-dim:#8A5A26;
+    --teal:#49A99B;
+    --teal-dim:#2E6B62;
+    --text:#EFEBE3;
+    --text-dim:#9AA0A6;
+    --text-faint:#5C6369;
+    --red:#C1553F;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1360px;margin:0 auto;padding:36px 28px 64px;}
+
+  /* ---------- Header ---------- */
+  header{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    border-bottom:1px solid var(--border);
+    padding-bottom:22px;margin-bottom:28px;flex-wrap:wrap;gap:16px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--copper);margin-bottom:8px;
+  }
+  h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:28px;font-weight:600;margin:0;letter-spacing:-.01em;
+  }
+  .sub{color:var(--text-dim);font-size:13.5px;margin-top:6px;max-width:480px;line-height:1.5;}
+  .client-field{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-faint);
+    text-align:right;
+  }
+  .client-field input{
+    background:transparent;border:none;border-bottom:1px solid var(--border);
+    color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:13px;
+    padding:4px 0;text-align:right;width:220px;margin-top:4px;
+  }
+  .client-field input:focus{outline:none;border-bottom-color:var(--copper);}
+
+  /* ---------- Hero benefit banner ---------- */
+  .hero{
+    background:linear-gradient(135deg,#1E2429 0%, #191D21 100%);
+    border:1px solid var(--border);
+    border-radius:4px;
+    padding:26px 30px;
+    display:grid;
+    grid-template-columns:1.1fr 0.8fr 1.1fr 1.1fr;
+    gap:0;
+    margin-bottom:28px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:linear-gradient(180deg,var(--copper),var(--teal));
+  }
+  .hero-item{padding:0 18px;border-left:1px solid var(--border-soft);}
+  .hero-item:first-child{border-left:none;padding-left:4px;}
+  .hero-label{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.09em;
+    text-transform:uppercase;color:var(--text-faint);margin-bottom:8px;
+  }
+  .hero-value{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:25px;
+    color:var(--text);letter-spacing:-.01em;
+  }
+  .hero-value.copper{color:var(--copper);}
+  .hero-value.teal{color:var(--teal);}
+  .hero-note{font-size:11.5px;color:var(--text-faint);margin-top:6px;}
+
+  /* ---------- Layout ---------- */
+  .inputs-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:18px;
+    align-items:start;margin-bottom:6px;
+  }
+  @media (max-width:980px){.inputs-grid{grid-template-columns:1fr 1fr;} .hero{grid-template-columns:1fr 1fr;} .hero-item{border-left:none;border-top:1px solid var(--border-soft);padding:16px 4px 0;} .hero-item:first-child{border-top:none;padding-top:0;}}
+  @media (max-width:640px){.inputs-grid{grid-template-columns:1fr;}}
+
+  .section-divider{
+    display:flex;align-items:center;gap:12px;margin:8px 0 18px;
+  }
+  .section-divider .line{flex:1;height:1px;background:var(--border);}
+  .section-divider .label{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--text-faint);white-space:nowrap;
+  }
+
+  .panel{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:4px;
+    padding:20px 22px 22px;
+    margin-bottom:18px;
+  }
+  .panel-title{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--text-dim);margin:0 0 16px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .panel-title .n{color:var(--copper);}
+
+  .field{margin-bottom:14px;}
+  .field:last-child{margin-bottom:0;}
+  .field label{
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-size:12.5px;color:var(--text-dim);margin-bottom:6px;
+  }
+  .field label .hint{font-size:10.5px;color:var(--text-faint);font-weight:400;}
+  .roi-label .hint{font-size:9px;color:var(--text-faint);font-weight:400;text-transform:none;letter-spacing:0;display:block;margin-top:2px;}
+  .input-row{position:relative;}
+  .input-row .prefix,.input-row .suffix{
+    position:absolute;top:50%;transform:translateY(-50%);
+    font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--text-faint);
+    pointer-events:none;
+  }
+  .input-row .prefix{left:11px;}
+  .input-row .suffix{right:11px;}
+  input[type=number]{
+    width:100%;background:var(--surface-2);border:1px solid var(--border);
+    border-radius:3px;color:var(--text);font-family:'IBM Plex Mono',monospace;
+    font-size:13.5px;padding:9px 11px;font-weight:500;
+  }
+  input[type=number].has-prefix{padding-left:22px;}
+  input[type=number].has-suffix{padding-right:28px;}
+  input[type=number]:focus{outline:none;border-color:var(--copper);}
+  input[type=number]::-webkit-inner-spin-button{opacity:0.3;}
+
+  input[type=range]{
+    width:100%;-webkit-appearance:none;height:4px;background:var(--surface-2);
+    border-radius:2px;margin-top:8px;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;width:15px;height:15px;border-radius:50%;
+    background:var(--copper);cursor:pointer;border:2px solid var(--bg);
+  }
+  .range-readout{
+    display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;
+    font-size:11px;color:var(--text-faint);margin-top:4px;
+  }
+  .range-readout .val{color:var(--copper);font-weight:600;font-size:15px;}
+
+  /* ---------- Results ---------- */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:640px){.compare{grid-template-columns:1fr;}}
+  .col-head{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;
+    text-transform:uppercase;padding-bottom:10px;margin-bottom:14px;
+    border-bottom:1px solid var(--border-soft);display:flex;align-items:center;gap:8px;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;display:inline-block;}
+  .dot.copper{background:var(--copper);}
+  .dot.teal{background:var(--teal);}
+  .col-head.before{color:var(--text-dim);}
+  .col-head.after{color:var(--teal);}
+
+  .row{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:9px 0;border-bottom:1px solid var(--border-soft);gap:10px;
+  }
+  .row:last-child{border-bottom:none;}
+  .row .rlabel{font-size:12.5px;color:var(--text-dim);line-height:1.4;}
+  .row .rvalue{
+    font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;
+    color:var(--text);white-space:nowrap;
+  }
+  .row.emph .rvalue{color:var(--teal);font-size:15.5px;}
+  .row.flag .rvalue{color:var(--copper);}
+
+  /* ---------- Time compression signature ---------- */
+  .compress-wrap{margin-top:4px;}
+  .compress-bar-track{position:relative;height:46px;margin-bottom:6px;}
+  .compress-bar{
+    position:absolute;top:0;left:0;height:20px;border-radius:2px;
+    display:flex;align-items:center;padding-left:10px;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#0F1113;
+    transition:width .35s ease;white-space:nowrap;overflow:hidden;
+  }
+  .compress-bar.before{background:var(--copper);top:0;}
+  .compress-bar.after{background:var(--teal);top:26px;}
+  .compress-scale{
+    display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;
+    font-size:10px;color:var(--text-faint);border-top:1px dashed var(--border);padding-top:6px;
+  }
+
+  /* ---------- ROI strip ---------- */
+  .roi-strip{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+    border:1px solid var(--border);border-radius:4px;overflow:hidden;
+  }
+  @media (max-width:900px){.roi-strip{grid-template-columns:repeat(3,1fr);} .roi-cell:nth-child(3){border-right:1px solid var(--border);}}
+  @media (max-width:560px){.roi-strip{grid-template-columns:repeat(1,1fr);} .roi-cell{border-right:none !important;border-bottom:1px solid var(--border);} .roi-cell:last-child{border-bottom:none;}}
+  .roi-cell{background:var(--surface-2);padding:16px 18px;border-right:1px solid var(--border);}
+  .roi-cell:last-child{border-right:none;}
+  .roi-cell.highlight{background:linear-gradient(135deg,#233024,#1B1F23);}
+  .roi-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);margin-bottom:8px;}
+  .roi-value{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;}
+  .roi-value.teal{color:var(--teal);}
+  .roi-value.copper{color:var(--copper);}
+
+  footer{margin-top:26px;font-size:11px;color:var(--text-faint);line-height:1.7;border-top:1px solid var(--border);padding-top:16px;}
+  footer b{color:var(--text-dim);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <div class="eyebrow">Enter My Invoice — AR Process Impact Model</div>
+      <h1>Accounts Receivable Time Reduction Calculator</h1>
+      <div class="sub">Models the staff cost and working capital impact of compressing AR / invoice submission cycle time.</div>
+    </div>
+    <div class="client-field">
+      PREPARED FOR
+      <div><input type="text" id="clientName" placeholder="Client / prospect name"></div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-item">
+      <div class="hero-label">Working Capital Freed</div>
+      <div class="hero-value teal" id="heroWC">$0</div>
+    </div>
+    <div class="hero-item">
+      <div class="hero-label">AR Cycle Time Cut</div>
+      <div class="hero-value" id="heroTimeCut">0%</div>
+    </div>
+    <div class="hero-item">
+      <div class="hero-label">Annual Staff &amp; Carrying Savings</div>
+      <div class="hero-value teal" id="heroAnnualStaffSavings">$0</div>
+      <div class="hero-note">Hours saved + reduced carrying cost, ×12</div>
+    </div>
+    <div class="hero-item">
+      <div class="hero-label">Annualized Benefit</div>
+      <div class="hero-value" id="heroAnnual">$0</div>
+      <div class="hero-note">WC freed once + 12mo of cost savings</div>
+    </div>
+  </div>
+
+  <div class="inputs-grid">
+      <div class="panel">
+        <div class="panel-title"><span class="n">01</span> Invoicing Information</div>
+        <div class="field">
+          <label>Sales per month</label>
+          <div class="input-row"><span class="prefix">$</span><input type="number" id="sales" class="has-prefix" value="850000" step="1000"></div>
+        </div>
+        <div class="field">
+          <label>Number of invoices per month</label>
+          <div class="input-row"><input type="number" id="numInvoices" value="120" step="1"></div>
+        </div>
+        <div class="field">
+          <label>EMI cost per invoice <span class="hint">platform cost</span></label>
+          <div class="input-row"><span class="prefix">$</span><input type="number" id="emiCost" class="has-prefix" value="8" step="0.5"></div>
+        </div>
+        <div class="field">
+          <label>Days to get an invoice into a payment stream <span class="hint">current</span></label>
+          <div class="input-row"><input type="number" id="daysToPayment" class="has-suffix" value="21" step="1"><span class="suffix">days</span></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title"><span class="n">02</span> Staff Information</div>
+        <div class="field">
+          <label>Staff involved in the AR process</label>
+          <div class="input-row"><input type="number" id="numStaff" value="3" step="1"></div>
+        </div>
+        <div class="field">
+          <label>Blended cost per hour</label>
+          <div class="input-row"><span class="prefix">$</span><input type="number" id="hourlyRate" class="has-prefix" value="38" step="1"></div>
+        </div>
+        <div class="field">
+          <label>Working hours per month <span class="hint">per employee</span></label>
+          <div class="input-row"><input type="number" id="hoursMonth" value="173.3" step="0.1"></div>
+        </div>
+        <div class="field">
+          <label>% of time on AR process</label>
+          <div class="input-row"><input type="range" id="pctTime" min="1" max="100" value="25"></div>
+          <div class="range-readout"><span></span><span class="val" id="pctTimeVal">25%</span></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title"><span class="n">03</span> Financial Information</div>
+        <div class="field">
+          <label>Carrying cost / cost of capital <span class="hint">annual rate</span></label>
+          <div class="input-row"><input type="range" id="carryRate" min="1" max="20" step="0.5" value="8"></div>
+          <div class="range-readout"><span></span><span class="val" id="carryRateVal">8.0%</span></div>
+        </div>
+        <div class="field">
+          <label>Average Profit Margin per job <span class="hint">% margin</span></label>
+          <div class="input-row"><input type="number" id="avgGM" class="has-suffix" value="35" step="0.5"><span class="suffix">%</span></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title"><span class="n">04</span> Reduction in Time</div>
+        <div class="field">
+          <label>Reduction in AR / invoice submission time</label>
+          <div class="input-row"><input type="range" id="reduction" min="5" max="80" value="40"></div>
+          <div class="range-readout"><span></span><span class="val" id="reductionVal">40%</span></div>
+        </div>
+      </div>
+  </div>
+
+  <div class="section-divider"><span class="line"></span><span class="label">Results</span><span class="line"></span></div>
+
+  <div class="panel">
+        <div class="panel-title"><span class="n">05</span> Results — Before vs. After</div>
+
+        <div class="compare">
+          <!-- BEFORE -->
+          <div>
+            <div class="col-head before"><span class="dot copper"></span>Before</div>
+            <div class="row"><span class="rlabel">Total time for AR process</span><span class="rvalue" id="b_totalTime">0 hrs</span></div>
+            <div class="row"><span class="rlabel">Total staff cost for AR process</span><span class="rvalue" id="b_staffCost">$0</span></div>
+            <div class="row"><span class="rlabel">Staff cost per hour</span><span class="rvalue" id="b_costPerHour">$0</span></div>
+            <div class="row"><span class="rlabel">Carrying cost for the month</span><span class="rvalue" id="b_carryCost">$0</span></div>
+            <div class="row emph"><span class="rlabel">Blended cost / hr — staff + carrying</span><span class="rvalue" id="b_blendedRate">$0</span></div>
+            <div class="row flag"><span class="rlabel">Working capital cost per hour of delay</span><span class="rvalue" id="b_wcPerHour">$0</span></div>
+          </div>
+          <!-- AFTER -->
+          <div>
+            <div class="col-head after"><span class="dot teal"></span>After</div>
+            <div class="row"><span class="rlabel">New days to get invoice into payment stream</span><span class="rvalue" id="a_newDays">0 days</span></div>
+            <div class="row"><span class="rlabel">Days saved in payment stream</span><span class="rvalue" id="a_daysSaved">0 days</span></div>
+            <div class="row"><span class="rlabel">New total time for AR process</span><span class="rvalue" id="a_newTime">0 hrs</span></div>
+            <div class="row"><span class="rlabel">Time saved on AR process</span><span class="rvalue" id="a_timeSaved">0 hrs</span></div>
+            <div class="row"><span class="rlabel">Staff + carrying cost saved / month</span><span class="rvalue" id="a_costSaved">$0</span></div>
+            <div class="row"><span class="rlabel">% reduction in total staff cost</span><span class="rvalue" id="a_pctReduction">0%</span></div>
+            <div class="row emph"><span class="rlabel">Working capital added to the company</span><span class="rvalue" id="a_wcAdded">$0</span></div>
+            <div class="row"><span class="rlabel">Working capital added, per hour</span><span class="rvalue" id="a_wcPerHour">$0</span></div>
+            <div class="row flag"><span class="rlabel">Equivalent sales ($) to match monthly Staff cost savings</span><span class="rvalue" id="a_salesRequired">$0</span></div>
+            <div class="row flag"><span class="rlabel">Annual sales required to cover annual staff savings</span><span class="rvalue" id="a_annualSalesRequired">$0</span></div>
+          </div>
+        </div>
+  </div>
+
+  <div class="panel">
+        <div class="panel-title">AR Cycle Time — Before / After</div>
+        <div class="compress-wrap">
+          <div class="compress-bar-track">
+            <div class="compress-bar before" id="barBefore" style="width:100%">BEFORE</div>
+            <div class="compress-bar after" id="barAfter" style="width:60%">AFTER</div>
+          </div>
+          <div class="compress-scale"><span>0 hrs</span><span id="scaleMax">— hrs</span></div>
+        </div>
+  </div>
+
+  <div class="panel">
+        <div class="panel-title">Overall Savings &amp; ROI vs. EMI Investment</div>
+        <div class="roi-strip">
+          <div class="roi-cell">
+            <div class="roi-label">Overall AR savings / mo</div>
+            <div class="roi-value" id="roiSavings">$0</div>
+          </div>
+          <div class="roi-cell">
+            <div class="roi-label">Monthly EMI investment</div>
+            <div class="roi-value" id="roiEmiCost">$0</div>
+          </div>
+          <div class="roi-cell highlight">
+            <div class="roi-label">Return multiple</div>
+            <div class="roi-value copper" id="roiMultiple">0.0x</div>
+          </div>
+          <div class="roi-cell highlight">
+            <div class="roi-label">Working Capital ROI <span class="hint">vs. annual EMI cost</span></div>
+            <div class="roi-value teal" id="roiWC">0.0x</div>
+          </div>
+          <div class="roi-cell highlight">
+            <div class="roi-label">Annualized Benefit ROI <span class="hint">vs. annual EMI cost</span></div>
+            <div class="roi-value teal" id="roiAnnualBenefit">0.0x</div>
+          </div>
+        </div>
+  </div>
+
+  <footer>
+        <b>Methodology:</b> Total AR hours = staff × % time on AR × monthly working hours. Carrying cost = sales/month × (annual rate ÷ 12), representing the monthly cost of capital tied up in receivables. Blended cost/hr = (staff cost + carrying cost) ÷ AR hours. Working capital cost per hour of delay = total monthly sales ÷ AR staff hours. Working capital added = sales/month × time-reduction %, reflecting capital released by a faster cycle — counted once, not compounded monthly. Annualized benefit = working capital added (one time) + 12 months of staff cost savings + 12 months of carrying cost savings. Equivalent sales ($) to match monthly Staff cost savings = monthly staff cost savings ÷ average profit margin %, i.e. the sales volume needed to generate the same dollar impact through margin alone. Annual sales required to cover annual staff savings = 12 months of staff cost savings ÷ average profit margin %. Working Capital ROI = working capital freed ÷ annualized EMI cost (monthly EMI investment × 12). Annualized Benefit ROI = annualized benefit ÷ annualized EMI cost. Figures are illustrative estimates for discussion purposes and should be validated against the client's actual AR data.
+  </footer>
+</div>
+
+<script>
+function fmtCurrency(v){
+  if(!isFinite(v)) v=0;
+  return '$' + v.toLocaleString('en-US',{maximumFractionDigits:0});
+}
+function fmtHours(v){
+  if(!isFinite(v)) v=0;
+  return v.toLocaleString('en-US',{maximumFractionDigits:1}) + ' hrs';
+}
+function fmtPct(v){
+  if(!isFinite(v)) v=0;
+  return v.toLocaleString('en-US',{maximumFractionDigits:1}) + '%';
+}
+
+const ids = ['sales','numInvoices','emiCost','daysToPayment','numStaff','hourlyRate','hoursMonth','pctTime','carryRate','avgGM','reduction'];
+const el = {};
+ids.forEach(id => el[id] = document.getElementById(id));
+
+function recalc(){
+  const sales = parseFloat(el.sales.value) || 0;
+  const numInvoices = parseFloat(el.numInvoices.value) || 0;
+  const emiCost = parseFloat(el.emiCost.value) || 0;
+  const daysToPayment = parseFloat(el.daysToPayment.value) || 0;
+  const numStaff = parseFloat(el.numStaff.value) || 0;
+  const hourlyRate = parseFloat(el.hourlyRate.value) || 0;
+  const hoursMonth = parseFloat(el.hoursMonth.value) || 0;
+  const pctTime = (parseFloat(el.pctTime.value) || 0) / 100;
+  const carryRate = (parseFloat(el.carryRate.value) || 0) / 100;
+  const avgGM = (parseFloat(el.avgGM.value) || 0) / 100;
+  const reduction = (parseFloat(el.reduction.value) || 0) / 100;
+
+  document.getElementById('pctTimeVal').textContent = fmtPct(pctTime*100);
+  document.getElementById('carryRateVal').textContent = fmtPct(carryRate*100);
+  document.getElementById('reductionVal').textContent = fmtPct(reduction*100);
+
+  // ---- BEFORE ----
+  const totalTimeHours = numStaff * pctTime * hoursMonth;
+  const staffCost = totalTimeHours * hourlyRate;
+  const costPerHour = totalTimeHours > 0 ? staffCost / totalTimeHours : 0;
+  const carryCostMonth = sales * (carryRate / 12);
+  const blendedRate = totalTimeHours > 0 ? (staffCost + carryCostMonth) / totalTimeHours : 0;
+  const wcPerHourBefore = totalTimeHours > 0 ? carryCostMonth / totalTimeHours : 0;
+  // Displayed "working capital cost per hour of delay" is total sales divided
+  // by AR staff hours (distinct from the carrying-cost-per-hour used in the
+  // savings math above).
+  const salesPerHourDelay = totalTimeHours > 0 ? sales / totalTimeHours : 0;
+
+  // ---- AFTER ----
+  const newTime = totalTimeHours * (1 - reduction);
+  const timeSaved = totalTimeHours * reduction;
+  const newDaysToPayment = daysToPayment * (1 - reduction);
+  const daysSaved = daysToPayment * reduction;
+  const costSaved = timeSaved * blendedRate;
+  const pctReduction = reduction * 100;
+  const wcAdded = sales * reduction;
+  const wcAddedPerHour = newTime > 0 ? wcAdded / newTime : 0;
+
+  const overallSavings = costSaved;
+  const totalBenefit = overallSavings + wcAdded;
+
+  // Split the blended monthly savings back into its two components so the
+  // annualized figure treats working capital as a one-time release (not
+  // compounded/multiplied by 12) while carrying cost + staff cost savings
+  // are recurring and DO get annualized.
+  const staffCostSavings = timeSaved * costPerHour;
+  const carryingCostSavings = timeSaved * wcPerHourBefore;
+  const annualizedBenefit = wcAdded + (staffCostSavings * 12) + (carryingCostSavings * 12);
+  const salesRequiredForSavings = avgGM > 0 ? staffCostSavings / avgGM : 0;
+  const annualSalesRequiredForStaffSavings = avgGM > 0 ? (staffCostSavings * 12) / avgGM : 0;
+
+  const emiMonthly = numInvoices * emiCost;
+  const emiAnnual = emiMonthly * 12;
+  const multiple = emiMonthly > 0 ? overallSavings / emiMonthly : 0;
+  const wcROI = emiAnnual > 0 ? wcAdded / emiAnnual : 0;
+  const annualBenefitROI = emiAnnual > 0 ? annualizedBenefit / emiAnnual : 0;
+
+  // ---- write BEFORE ----
+  document.getElementById('b_totalTime').textContent = fmtHours(totalTimeHours);
+  document.getElementById('b_staffCost').textContent = fmtCurrency(staffCost);
+  document.getElementById('b_costPerHour').textContent = fmtCurrency(costPerHour) + '/hr';
+  document.getElementById('b_carryCost').textContent = fmtCurrency(carryCostMonth);
+  document.getElementById('b_blendedRate').textContent = fmtCurrency(blendedRate) + '/hr';
+  document.getElementById('b_wcPerHour').textContent = fmtCurrency(salesPerHourDelay) + '/hr';
+
+  // ---- write AFTER ----
+  document.getElementById('a_newDays').textContent = newDaysToPayment.toLocaleString('en-US',{maximumFractionDigits:1}) + ' days';
+  document.getElementById('a_daysSaved').textContent = daysSaved.toLocaleString('en-US',{maximumFractionDigits:1}) + ' days';
+  document.getElementById('a_newTime').textContent = fmtHours(newTime);
+  document.getElementById('a_timeSaved').textContent = fmtHours(timeSaved);
+  document.getElementById('a_costSaved').textContent = fmtCurrency(costSaved);
+  document.getElementById('a_pctReduction').textContent = fmtPct(pctReduction);
+  document.getElementById('a_wcAdded').textContent = fmtCurrency(wcAdded);
+  document.getElementById('a_wcPerHour').textContent = fmtCurrency(wcAddedPerHour) + '/hr';
+  document.getElementById('a_salesRequired').textContent = fmtCurrency(salesRequiredForSavings);
+  document.getElementById('a_annualSalesRequired').textContent = fmtCurrency(annualSalesRequiredForStaffSavings);
+
+  // ---- hero ----
+  document.getElementById('heroWC').textContent = fmtCurrency(wcAdded);
+  document.getElementById('heroTimeCut').textContent = fmtPct(pctReduction);
+  document.getElementById('heroAnnualStaffSavings').textContent = fmtCurrency((staffCostSavings + carryingCostSavings) * 12);
+  document.getElementById('heroAnnual').textContent = fmtCurrency(annualizedBenefit);
+
+  // ---- ROI strip ----
+  document.getElementById('roiSavings').textContent = fmtCurrency(overallSavings);
+  document.getElementById('roiEmiCost').textContent = fmtCurrency(emiMonthly);
+  document.getElementById('roiMultiple').textContent = multiple.toFixed(1) + 'x';
+  document.getElementById('roiWC').textContent = wcROI.toFixed(1) + 'x';
+  document.getElementById('roiAnnualBenefit').textContent = annualBenefitROI.toFixed(1) + 'x';
+
+  // ---- compression bar ----
+  const maxH = totalTimeHours > 0 ? totalTimeHours : 1;
+  document.getElementById('barBefore').style.width = '100%';
+  document.getElementById('barAfter').style.width = Math.max((newTime/maxH*100),4) + '%';
+  document.getElementById('barBefore').textContent = 'BEFORE — ' + totalTimeHours.toFixed(1) + ' hrs';
+  document.getElementById('barAfter').textContent = 'AFTER — ' + newTime.toFixed(1) + ' hrs';
+  document.getElementById('scaleMax').textContent = maxH.toFixed(1) + ' hrs';
+}
+
+ids.forEach(id => el[id].addEventListener('input', recalc));
+recalc();
+</script>
+</body>
+</html>
